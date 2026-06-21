@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- META -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>ResolveStation | Enterprise Facility & Property Management</title>
+
+    <!-- BOOTSTRAP -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- BOOTSTRAP ICONS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+
+    <!-- GOOGLE FONTS -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- CUSTOM CSS -->
+    <link rel="stylesheet" href="/css/home.css" />
+  </head>
+
+  <body>
+    <!-- NAVBAR -->
+    <div class="mobile-menu-overlay"></div>
+
+    <nav class="navbar navbar-expand-md fixed-top rs-navbar">
+      <div class="container">
+        <a class="navbar-brand" href="/">
+          <img
+            src="/images/logo/resolvestationlogo.svg"
+            alt="ResolveStation Logo"
+            class="rs-logo"
+          />
+        </a>
+
+        <!-- Mobile Toggle -->
+
+        <button
+          class="navbar-toggler border-0 shadow-none"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#mainNavbar"
+          aria-label="Open Menu"
+        >
+          <i class="bi bi-list fs-2 ham-icon"></i>
+        </button>
+
+        <!-- Mobile Drawer -->
+
+        <div class="collapse navbar-collapse" id="mainNavbar">
+          <button
+            type="button"
+            class="mobile-close-btn border-0 bg-transparent"
+            aria-label="Close Menu"
+          >
+            <i class="bi bi-x-lg"></i>
+          </button>
+
+          <ul class="navbar-nav mx-auto">
+            <div class="mobile-menu-header">
+              <img
+                src="/images/logo/resolvestationlogo.svg"
+                alt="ResolveStation"
+                class="mobile-menu-logo"
+              />
+            </div>
+
+            <div class="mobile-divider"></div>
+            <li class="nav-item">
+              <a class="nav-link active" href="/">Home</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="/about">About</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="/contact">Contact Us</a>
+            </li>
+          </ul>
+
+          <div class="rs-nav-actions">
+            <a href="/auth/login" class="btn rs-btn-outline rsp-text">Login</a>
+
+            <a href="/auth/register" class="btn rs-btn-primary">Sign Up</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="hero-section">
+      <div class="container">
+        <div class="row align-items-center">
+          <!-- LEFT -->
+
+          <div class="col-lg-6">
+            <span class="hero-badge">
+              Enterprise Facility Management Platform
+            </span>
+
+            <h1 class="hero-title">
+              Resolve Complaints. Manage Properties. Streamline Operations.
+            </h1>
+
+            <p class="hero-description">
+              ResolveStation helps organizations manage maintenance requests,
+              tenant complaints, facility operations, rent collection, service
+              tracking and workforce assignment through a single
+              enterprise-grade platform.
+            </p>
+
+            <div class="hero-buttons">
+              <a href="/auth/register" class="btn rs-btn-primary hero-btn">
+                Get Started
+              </a>
+
+              <a href="/contact" class="btn rs-btn-outline hero-btn">
+                Request Demo
+              </a>
+            </div>
+
+            <!-- Small Stats -->
+
+            <div class="hero-mini-stats">
+              <div>
+                <h4 class="counter" data-target="2500">0</h4>
+                <span> Complaints Resolved </span>
+              </div>
+
+              <div>
+                <h4 class="counter" data-target="500">0</h4>
+                <span> Properties Managed </span>
+              </div>
+
+              <div>
+                <h4 class="counter" data-target="99.7">0</h4>
+                <span> Success Rate </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT -->
+
+          <div class="col-lg-6">
+            <div class="hero-dashboard">
+              <div class="dashboard-card card-1">
+                <div class="dashboard-icon">
+                  <i class="bi bi-building-check"></i>
+                </div>
+
+                <div>
+                  <h5>Open Complaints</h5>
+                  <p>145 Active Issues</p>
+                </div>
+              </div>
+
+              <div class="dashboard-card card-2">
+                <div class="dashboard-icon">
+                  <i class="bi bi-tools"></i>
+                </div>
+
+                <div>
+                  <h5>Assigned Staff</h5>
+                  <p>82 Team Members</p>
+                </div>
+              </div>
+
+              <div class="dashboard-card card-3">
+                <div class="dashboard-icon">
+                  <i class="bi bi-cash-stack"></i>
+                </div>
+
+                <div>
+                  <h5>Rent Collection</h5>
+                  <p>98% Success Rate</p>
+                </div>
+              </div>
+
+              <div class="dashboard-card card-4">
+                <div class="dashboard-icon">
+                  <i class="bi bi-graph-up-arrow"></i>
+                </div>
+
+                <div>
+                  <h5>Performance</h5>
+                  <p>+34% Efficiency</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TRUSTED SECTION -->
+    <section class="trusted-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-12 text-center">
+            <h6 class="trusted-title">
+              TRUSTED BY PROPERTY MANAGERS, RESIDENTIAL COMMUNITIES & FACILITY
+              TEAMS
+            </h6>
+          </div>
+        </div>
+
+        <div class="trusted-logos">
+          <div class="logo-item">RESIDENTIAL</div>
+
+          <div class="logo-item">COMMERCIAL</div>
+
+          <div class="logo-item">CORPORATE</div>
+
+          <div class="logo-item">HOSPITALITY</div>
+
+          <div class="logo-item">INDUSTRIAL</div>
+
+          <div class="logo-item">EDUCATIONAL</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STATISTICS SECTION  -->
+    <section class="stats-section">
+      <div class="container">
+        <div class="row g-4">
+          <div class="col-md-3 col-6">
+            <div class="stat-card">
+              <h2 class="counter" data-target="2500">0</h2>
+
+              <p>Complaints Resolved</p>
+            </div>
+          </div>
+
+          <div class="col-md-3 col-6">
+            <div class="stat-card">
+              <h2 class="counter" data-target="500">0</h2>
+
+              <p>Properties Managed</p>
+            </div>
+          </div>
+
+          <div class="col-md-3 col-6">
+            <div class="stat-card">
+              <h2 class="counter" data-target="100">0</h2>
+
+              <p>Field Technicians</p>
+            </div>
+          </div>
+
+          <div class="col-md-3 col-6">
+            <div class="stat-card">
+              <h2 class="counter" data-target="99.7">0</h2>
+
+              <p>Resolution Success</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES SECTION -->
+    <section class="services-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-badge"> OUR SERVICES </span>
+
+          <h2>Everything Required To Run Modern Properties Efficiently</h2>
+
+          <p>
+            Manage maintenance, complaints, staff, tenant interactions and
+            operational workflows from one intelligent platform.
+          </p>
+        </div>
+
+        <div class="row g-4">
+          <!-- Service Card 1 -->
+
+          <div class="col-lg-4 col-md-6">
+            <div class="service-card">
+              <div class="service-overlay service-img-1"></div>
+
+              <div class="service-content">
+                <i class="bi bi-chat-dots"></i>
+
+                <h4>Complaint Management</h4>
+
+                <p>Track, assign and resolve complaints in real time.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Service Card 2 -->
+
+          <div class="col-lg-4 col-md-6">
+            <div class="service-card">
+              <div class="service-overlay service-img-2"></div>
+
+              <div class="service-content">
+                <i class="bi bi-cash-coin"></i>
+
+                <h4>Rent Collection</h4>
+
+                <p>Automate rent tracking and payment monitoring.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Service Card 3 -->
+
+          <div class="col-lg-4 col-md-6">
+            <div class="service-card">
+              <div class="service-overlay service-img-3"></div>
+
+              <div class="service-content">
+                <i class="bi bi-droplet-half"></i>
+
+                <h4>Leakage Resolution</h4>
+
+                <p>Report and monitor leakage issues instantly.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Service Card 4 -->
+          <div class="col-lg-4 col-md-6">
+            <div class="service-card">
+              <div class="service-overlay service-img-4"></div>
+
+              <div class="service-content">
+                <i class="bi bi-person-workspace"></i>
+
+                <h4>Workforce Management</h4>
+
+                <p>Assign and monitor technicians efficiently.</p>
+              </div>
+            </div>
+          </div>
+          <!-- Service Card 5 -->
+          <div class="col-lg-4 col-md-6">
+            <div class="service-card">
+              <div class="service-overlay service-img-5"></div>
+
+              <div class="service-content">
+                <i class="bi bi-calendar-check"></i>
+
+                <h4>Preventive Maintenance</h4>
+
+                <p>Service and activities before issues become critical.</p>
+              </div>
+            </div>
+          </div>
+          <!-- Service Card 6 -->
+          <div class="col-lg-4 col-md-6">
+            <div class="service-card">
+              <div class="service-overlay service-img-6"></div>
+
+              <div class="service-content">
+                <i class="bi bi-hdd-stack"></i>
+
+                <h4>Asset Tracking</h4>
+
+                <p>Monitor equipment with complete lifecycle visibility.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="rs-footer">
+      <div class="footer-bottom">
+        <p class="footer-tagline">
+          Enterprise Facility & Complaint Management Platform
+        </p>
+
+        <div class="footer-social-wrapper">
+          <span>Follow Us</span>
+
+          <div class="footer-socials">
+            <a href="https://www.facebook.com/" target="_blank"
+              ><i class="bi bi-facebook"></i
+            ></a>
+            <a href="https://www.instagram.com/?hl=en" target="_blank"
+              ><i class="bi bi-instagram"></i
+            ></a>
+            <a
+              href="https://www.linkedin.com/jobs?mcid=7454805946289287168&src=go-pa&trk=sem-ga_campid.23794155732_asid._crid._kw._d.c_tid._n.x_mt._geo.9229136&cid=&gclsrc=aw.ds&gad_source=1&gad_campaignid=23799553907&gbraid=0AAAAAogN_LyfTn3kTL9G_CYRYn2C-eobm&gclid=Cj0KCQjwrs7RBhDuARIsAIVfBD2o210E7NpJYCiOy9jHV6KSRsUZ2FkKsxz2PBuM0hElVWjmfBsuRd4aAinrEALw_wcB"
+              target="_blank"
+              ><i class="bi bi-linkedin"></i
+            ></a>
+            <a href="https://x.com/" target="_blank"
+              ><i class="bi bi-twitter-x"></i
+            ></a>
+          </div>
+        </div>
+
+        <p class="footer-copyright">
+          &copy; 2026 <a href="#" class="ftr-nm-color">ResolveStation</a>. All
+          Rights Reserved.
+        </p>
+      </div>
+
+      <button id="scrollTopBtn" aria-label="Scroll To Top">
+        <i class="bi bi-arrow-up"></i>
+      </button>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/home.js"></script>
+  </body>
+</html>

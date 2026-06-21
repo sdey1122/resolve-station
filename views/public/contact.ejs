@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- ========================================= -->
+    <!-- META -->
+    <!-- ========================================= -->
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Contact Us | ResolveStation</title>
+
+    <!-- ========================================= -->
+    <!-- BOOTSTRAP -->
+    <!-- ========================================= -->
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- ========================================= -->
+    <!-- BOOTSTRAP ICONS -->
+    <!-- ========================================= -->
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+
+    <!-- ========================================= -->
+    <!-- GOOGLE FONT -->
+    <!-- ========================================= -->
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- ========================================= -->
+    <!-- CUSTOM CSS -->
+    <!-- ========================================= -->
+
+    <link rel="stylesheet" href="/css/contact.css" />
+  </head>
+
+  <body>
+    <!-- ========================================= -->
+    <!-- MOBILE OVERLAY -->
+    <!-- ========================================= -->
+
+    <div class="mobile-menu-overlay"></div>
+
+    <!-- ========================================= -->
+    <!-- NAVBAR -->
+    <!-- ========================================= -->
+
+    <nav class="navbar navbar-expand-md fixed-top rs-navbar">
+      <div class="container">
+        <a class="navbar-brand" href="/">
+          <img
+            src="/images/logo/resolvestationlogo.svg"
+            alt="ResolveStation Logo"
+            class="rs-logo"
+          />
+        </a>
+
+        <!-- MOBILE TOGGLER -->
+
+        <button
+          class="navbar-toggler border-0 shadow-none"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#mainNavbar"
+          aria-label="Open Menu"
+        >
+          <i class="bi bi-list fs-2 ham-icon"></i>
+        </button>
+
+        <!-- MOBILE DRAWER -->
+
+        <div class="collapse navbar-collapse" id="mainNavbar">
+          <button
+            type="button"
+            class="mobile-close-btn border-0 bg-transparent"
+            aria-label="Close Menu"
+          >
+            <i class="bi bi-x-lg"></i>
+          </button>
+
+          <ul class="navbar-nav mx-auto">
+            <div class="mobile-menu-header">
+              <img
+                src="/images/logo/resolvestationlogo.svg"
+                alt="ResolveStation"
+                class="mobile-menu-logo"
+              />
+            </div>
+
+            <div class="mobile-divider"></div>
+
+            <li class="nav-item">
+              <a class="nav-link" href="/">Home</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="/about">About</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link active" href="/contact">Contact Us</a>
+            </li>
+          </ul>
+
+          <div class="rs-nav-actions">
+            <a href="/auth/login" class="btn rs-btn-outline rsp-text">
+              Login
+            </a>
+
+            <a href="/auth/register" class="btn rs-btn-primary"> Sign Up </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- ========================================= -->
+    <!-- SUCCESS MODAL -->
+    <!-- ========================================= -->
+
+    <div class="modal fade" id="successModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content success-modal">
+          <div class="modal-body text-center p-5">
+            <i class="bi bi-check-circle-fill success-icon"></i>
+
+            <h3 class="success-title">Message Submitted Successfully!</h3>
+
+            <p class="success-text">
+              Thank you for connecting with ResolveStation. Our team will
+              contact you as soon as possible.
+            </p>
+
+            <button
+              type="button"
+              class="btn rs-btn-primary mt-3"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================= -->
+    <!-- CONTACT SECTION -->
+    <!-- ========================================= -->
+
+    <section class="contact-section">
+      <div class="container">
+        <div class="row align-items-start">
+          <!-- ========================== -->
+          <!-- CONTACT FORM -->
+          <!-- ========================== -->
+
+          <div class="col-lg-6">
+            <div class="contact-form-wrapper reveal">
+              <span class="contact-subtitle"> CONTACT FORM </span>
+
+              <h1 class="contact-title">Ask Us <span>Anything</span></h1>
+              <form id="contactForm" novalidate>
+                <!-- NAME -->
+                <div class="form-group">
+                  <label for="name"> Your Name </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    class="form-control"
+                    placeholder="Enter your full name"
+                  />
+                  <small id="nameError" class="error-text"></small>
+                </div>
+                <!-- EMAIL -->
+                <div class="form-group">
+                  <label for="email"> Your Email </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    class="form-control"
+                    placeholder="Enter your email address"
+                  />
+                  <small id="emailError" class="error-text"></small>
+                </div>
+                <!-- MESSAGE -->
+                <div class="form-group">
+                  <label for="message"> Write a Message </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    rows="7"
+                    class="form-control"
+                    placeholder="Write your message..."
+                  ></textarea>
+                  <small id="messageError" class="error-text"></small>
+                </div>
+                <!-- SUBMIT BUTTON -->
+                <button type="submit" class="btn contact-submit-btn">
+                  Submit
+                </button>
+              </form>
+            </div>
+          </div>
+
+          <!-- ========================== -->
+          <!-- CONTACT INFO BOX -->
+          <!-- ========================== -->
+
+          <div class="col-lg-6">
+            <div class="contact-info-box reveal">
+              <div class="contact-info-item">
+                <i class="bi bi-geo-alt-fill contact-icon"></i>
+                <h3>Address</h3>
+
+                <p>ResolveStation Headquarters</p>
+
+                <p>Kolkata, West Bengal, India</p>
+              </div>
+
+              <hr />
+
+              <div class="contact-info-item">
+                <i class="bi bi-telephone-fill contact-icon"></i>
+                <h3>Phone</h3>
+
+                <p>+91 98765 43210</p>
+
+                <p>+91 91234 56789</p>
+              </div>
+
+              <hr />
+
+              <div class="contact-info-item">
+                <i class="bi bi-envelope-fill contact-icon"></i>
+                <h3>Email</h3>
+
+                <p>support@resolvestation.com</p>
+
+                <p>contact@resolvestation.com</p>
+              </div>
+
+              <hr />
+
+              <div class="contact-info-item">
+                <i class="bi bi-clock-fill contact-icon"></i>
+                <h3>Working Hours</h3>
+
+                <p>Monday - Friday</p>
+
+                <p>9:00 AM - 7:00 PM</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================= -->
+    <!-- MAP SECTION -->
+    <!-- ========================================= -->
+
+    <section class="map-section">
+      <div class="container">
+        <!-- SECTION HEADER -->
+
+        <div class="map-header reveal">
+          <span class="section-badge"> OUR LOCATION </span>
+
+          <h2>Find Us On The Map</h2>
+
+          <p>
+            Visit our office, connect with our team, or reach out for support.
+            We're always here to help.
+          </p>
+        </div>
+
+        <!-- MAP CARD -->
+
+        <div class="map-box reveal">
+          <iframe
+            src="https://maps.google.com/maps?q=Kolkata&t=&z=12&ie=UTF8&iwloc=&output=embed"
+            loading="lazy"
+            allowfullscreen
+          ></iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================= -->
+    <!-- FOOTER -->
+    <!-- ========================================= -->
+
+    <footer class="rs-footer">
+      <div class="footer-bottom">
+        <p class="footer-tagline">
+          Enterprise Facility & Complaint Management Platform
+        </p>
+
+        <div class="footer-social-wrapper">
+          <span>Follow Us</span>
+
+          <div class="footer-socials">
+            <a href="https://www.facebook.com/" target="_blank">
+              <i class="bi bi-facebook"></i>
+            </a>
+
+            <a href="https://www.instagram.com/" target="_blank">
+              <i class="bi bi-instagram"></i>
+            </a>
+
+            <a href="https://www.linkedin.com/" target="_blank">
+              <i class="bi bi-linkedin"></i>
+            </a>
+
+            <a href="https://x.com/" target="_blank">
+              <i class="bi bi-twitter-x"></i>
+            </a>
+          </div>
+        </div>
+
+        <p class="footer-copyright">
+          &copy; 2026
+          <a href="#" class="ftr-nm-color"> ResolveStation </a>. All Rights
+          Reserved.
+        </p>
+      </div>
+
+      <button id="scrollTopBtn" aria-label="Scroll To Top">
+        <i class="bi bi-arrow-up"></i>
+      </button>
+    </footer>
+
+    <!-- ========================================= -->
+    <!-- BOOTSTRAP -->
+    <!-- ========================================= -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- ========================================= -->
+    <!-- CUSTOM JS -->
+    <!-- ========================================= -->
+
+    <script src="/js/contact.js"></script>
+  </body>
+</html>

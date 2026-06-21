@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- META -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>About Us | ResolveStation</title>
+
+    <!-- BOOTSTRAP -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- BOOTSTRAP ICONS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+
+    <!-- GOOGLE FONTS -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- CUSTOM CSS -->
+    <link rel="stylesheet" href="/css/about.css" />
+  </head>
+
+  <body>
+    <!-- NAVBAR -->
+    <div class="mobile-menu-overlay"></div>
+
+    <nav class="navbar navbar-expand-md fixed-top rs-navbar">
+      <div class="container">
+        <a class="navbar-brand" href="/">
+          <img
+            src="/images/logo/resolvestationlogo.svg"
+            alt="ResolveStation Logo"
+            class="rs-logo"
+          />
+        </a>
+
+        <button
+          class="navbar-toggler border-0 shadow-none"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#mainNavbar"
+          aria-label="Open Menu"
+        >
+          <i class="bi bi-list fs-2 ham-icon"></i>
+        </button>
+
+        <div class="collapse navbar-collapse" id="mainNavbar">
+          <button
+            type="button"
+            class="mobile-close-btn border-0 bg-transparent"
+            aria-label="Close Menu"
+          >
+            <i class="bi bi-x-lg"></i>
+          </button>
+
+          <ul class="navbar-nav mx-auto">
+            <div class="mobile-menu-header">
+              <img
+                src="/images/logo/resolvestationlogo.svg"
+                alt="ResolveStation"
+                class="mobile-menu-logo"
+              />
+            </div>
+
+            <div class="mobile-divider"></div>
+
+            <li class="nav-item">
+              <a class="nav-link" href="/">Home</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link active" href="/about">About</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="/contact">Contact Us</a>
+            </li>
+          </ul>
+
+          <div class="rs-nav-actions">
+            <a href="/auth/login" class="btn rs-btn-outline rsp-text">
+              Login
+            </a>
+
+            <a href="/auth/register" class="btn rs-btn-primary"> Sign Up </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- ABOUT HERO -->
+    <section class="about-hero-section">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-6">
+            <span class="about-badge">ABOUT RESOLVESTATION</span>
+
+            <h1 class="about-title">
+              Simplifying Property & Facility Management Through Smart Digital
+              Solutions
+            </h1>
+
+            <p class="about-description">
+              ResolveStation helps organizations manage complaints, maintenance
+              requests, workforce operations and property assets from one
+              centralized enterprise platform.
+            </p>
+
+            <p class="about-description">
+              Our mission is to eliminate operational bottlenecks, improve
+              response times and create transparent workflows that benefit
+              residents, tenants, facility managers and maintenance teams.
+            </p>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="about-image-card">
+              <img
+                src="/images/about-hero.jpg"
+                alt="ResolveStation Team"
+                class="img-fluid rounded-4"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMPANY STORY -->
+    <section class="about-story-section">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-6 order-lg-1 order-2">
+            <div class="about-image-card">
+              <img
+                src="/images/about-story.jpg"
+                alt="Property Management"
+                class="img-fluid rounded-4"
+              />
+            </div>
+          </div>
+
+          <div class="col-lg-6 order-lg-2 order-1">
+            <span class="section-badge">OUR STORY</span>
+
+            <h2 class="section-title">
+              Built For Modern Organizations That Need More Than Spreadsheets
+            </h2>
+
+            <p class="section-description">
+              Traditional property and facility management often relies on
+              fragmented communication, manual tracking and disconnected
+              systems.
+            </p>
+
+            <p class="section-description">
+              ResolveStation was designed to bring everything together into a
+              single intelligent platform where complaints, maintenance,
+              workforce assignments, asset tracking and operational reporting
+              can be managed seamlessly.
+            </p>
+
+            <div class="feature-list">
+              <div class="feature-item">
+                <i class="bi bi-check-circle-fill"></i>
+                Centralized Complaint Management
+              </div>
+
+              <div class="feature-item">
+                <i class="bi bi-check-circle-fill"></i>
+                Real-Time Workforce Tracking
+              </div>
+
+              <div class="feature-item">
+                <i class="bi bi-check-circle-fill"></i>
+                Property & Asset Monitoring
+              </div>
+
+              <div class="feature-item">
+                <i class="bi bi-check-circle-fill"></i>
+                Enterprise Reporting & Analytics
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MISSION SECTION -->
+    <section class="mission-section">
+      <div class="container">
+        <div class="section-header text-center">
+          <span class="section-badge">OUR MISSION</span>
+
+          <h2>
+            Empowering Property Managers With Better Visibility, Faster
+            Resolution & Smarter Operations
+          </h2>
+
+          <p>
+            We believe every facility deserves a modern platform that improves
+            communication, accountability and operational efficiency.
+          </p>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-lg-4 col-md-6">
+            <div class="mission-card">
+              <i class="bi bi-chat-dots"></i>
+
+              <h4>Transparent Communication</h4>
+
+              <p>
+                Keep residents, tenants and management teams informed through
+                every stage of issue resolution.
+              </p>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6">
+            <div class="mission-card">
+              <i class="bi bi-lightning-charge"></i>
+
+              <h4>Faster Resolution</h4>
+
+              <p>
+                Reduce delays with automated assignment, tracking and workflow
+                management.
+              </p>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 mx-md-auto">
+            <div class="mission-card">
+              <i class="bi bi-graph-up-arrow"></i>
+
+              <h4>Operational Growth</h4>
+
+              <p>
+                Use actionable insights and performance analytics to improve
+                long-term efficiency.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STATS SECTION -->
+    <section class="stats-section">
+      <div class="container">
+        <div class="row g-4">
+          <div class="col-md-3 col-6">
+            <div class="stat-card">
+              <h2 class="counter" data-target="2500">0</h2>
+              <p>Complaints Resolved</p>
+            </div>
+          </div>
+
+          <div class="col-md-3 col-6">
+            <div class="stat-card">
+              <h2 class="counter" data-target="500">0</h2>
+              <p>Properties Managed</p>
+            </div>
+          </div>
+
+          <div class="col-md-3 col-6">
+            <div class="stat-card">
+              <h2 class="counter" data-target="100">0</h2>
+              <p>Field Technicians</p>
+            </div>
+          </div>
+
+          <div class="col-md-3 col-6">
+            <div class="stat-card">
+              <h2 class="counter" data-target="99.7">0</h2>
+              <p>Resolution Success</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA SECTION -->
+    <section class="about-cta-section">
+      <div class="container">
+        <div class="cta-box">
+          <h2>Ready To Modernize Your Operations?</h2>
+
+          <p>
+            Join organizations that are transforming property and facility
+            management with ResolveStation.
+          </p>
+
+          <a href="/auth/register" class="btn rs-btn-primary">
+            Get Started Today
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="rs-footer">
+      <div class="footer-bottom">
+        <p class="footer-tagline">
+          Enterprise Facility & Complaint Management Platform
+        </p>
+
+        <div class="footer-social-wrapper">
+          <span>Follow Us</span>
+
+          <div class="footer-socials">
+            <a href="https://www.facebook.com/" target="_blank">
+              <i class="bi bi-facebook"></i>
+            </a>
+
+            <a href="https://www.instagram.com/" target="_blank">
+              <i class="bi bi-instagram"></i>
+            </a>
+
+            <a href="https://www.linkedin.com/" target="_blank">
+              <i class="bi bi-linkedin"></i>
+            </a>
+
+            <a href="https://x.com/" target="_blank">
+              <i class="bi bi-twitter-x"></i>
+            </a>
+          </div>
+        </div>
+
+        <p class="footer-copyright">
+          &copy; 2026
+          <a href="#" class="ftr-nm-color">ResolveStation</a>. All Rights
+          Reserved.
+        </p>
+      </div>
+
+      <button id="scrollTopBtn" aria-label="Scroll To Top">
+        <i class="bi bi-arrow-up"></i>
+      </button>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/about.js"></script>
+  </body>
+</html>
