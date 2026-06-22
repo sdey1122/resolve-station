@@ -95,20 +95,85 @@ class AuthService {
    * ==========================================
    */
 
+  // async verifyEmail(token) {
+  //   const hashedToken = hashToken(token);
+
+  //   const user = await User.findOne({
+  //     verificationToken: hashedToken,
+
+  //     verificationTokenExpires: {
+  //       $gt: Date.now(),
+  //     },
+  //   });
+
+  //   if (!user) {
+  //     throw new Error("Invalid or expired verification link.");
+  //   }
+
+  //   user.isVerified = true;
+
+  //   user.verificationToken = null;
+
+  //   user.verificationTokenExpires = null;
+
+  //   await user.save();
+
+  //   return {
+  //     success: true,
+
+  //     message: "Email verification completed successfully.",
+  //   };
+  // }
+
   async verifyEmail(token) {
     const hashedToken = hashToken(token);
 
+    /**
+
+* ==========================================
+* FIND USER BY TOKEN
+* ==========================================
+  */
+
     const user = await User.findOne({
       verificationToken: hashedToken,
-
-      verificationTokenExpires: {
-        $gt: Date.now(),
-      },
     });
 
     if (!user) {
-      throw new Error("Invalid or expired verification link.");
+      throw new Error("Invalid verification link.");
     }
+
+    /**
+
+* ==========================================
+* ALREADY VERIFIED
+* ==========================================
+  */
+
+    if (user.isVerified) {
+      throw new Error("This email has already been verified.");
+    }
+
+    /**
+
+* ==========================================
+* TOKEN EXPIRED
+* ==========================================
+  */
+
+    if (
+      !user.verificationTokenExpires ||
+      user.verificationTokenExpires < Date.now()
+    ) {
+      throw new Error("Verification link has expired.");
+    }
+
+    /**
+
+* ==========================================
+* VERIFY ACCOUNT
+* ==========================================
+  */
 
     user.isVerified = true;
 
@@ -121,9 +186,10 @@ class AuthService {
     return {
       success: true,
 
-      message: "Email verification completed successfully.",
+      message: "Email verified successfully.",
     };
   }
+
   /**
    * ==========================================
    * LOGIN USER
@@ -214,7 +280,6 @@ class AuthService {
    * REFRESH ACCESS TOKEN
    * ==========================================
    */
-
 
   async refreshAccessToken(refreshToken) {
     if (!refreshToken) {

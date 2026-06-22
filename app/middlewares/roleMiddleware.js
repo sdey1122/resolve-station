@@ -22,13 +22,19 @@ const roleMiddleware =
       /**
        * ROLE CHECK
        */
+      const userRole = req.user.role?.toUpperCase();
 
-      if (!allowedRoles.includes(req.user.role)) {
-        return res.status(403).json({
-          success: false,
-          message: `Access denied!
-          Required role: ${allowedRoles.join(", ")}`,
-        });
+      const roles = allowedRoles.map((role) => role.toUpperCase());
+
+      if (!roles.includes(userRole)) {
+        if (req.originalUrl.startsWith("/api")) {
+          return res.status(403).json({
+            success: false,
+            message: "Access denied.",
+          });
+        }
+
+        return res.redirect("/");
       }
 
       return next();

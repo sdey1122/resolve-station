@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    Job Details | ResolveStation
+  </title>
+
+  <link
+    rel="stylesheet"
+    href="/css/dashboard.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+  >
+
+</head>
+
+<body>
+
+<div class="dashboard-container">
+
+  <%- include("../partials/staff-sidebar") %>
+
+  <main class="dashboard-main">
+
+    <%- include("../partials/dashboard-header") %>
+
+    <!-- ===================================== -->
+    <!-- PAGE HEADER -->
+    <!-- ===================================== -->
+
+    <section class="page-header">
+
+      <div>
+
+        <h1>
+
+          <i class="fas fa-screwdriver-wrench"></i>
+
+          Job Details
+
+        </h1>
+
+        <p>
+
+          Review maintenance request and update progress.
+
+        </p>
+
+      </div>
+
+      <a
+        href="/staff/assigned-jobs"
+        class="btn btn-outline"
+      >
+
+        <i class="fas fa-arrow-left"></i>
+
+        Back
+
+      </a>
+
+    </section>
+
+    <!-- ===================================== -->
+    <!-- JOB SUMMARY -->
+    <!-- ===================================== -->
+
+    <section class="content-card">
+
+      <h3>
+
+        Request Summary
+
+      </h3>
+
+      <div class="stats-grid">
+
+        <div class="stat-card">
+
+          <h4>
+            Ticket ID
+          </h4>
+
+          <h2>
+
+            #<%= job.ticketId || "N/A" %>
+
+          </h2>
+
+        </div>
+
+        <div class="stat-card">
+
+          <h4>
+            Priority
+          </h4>
+
+          <h2>
+
+            <%= job.priority || "Medium" %>
+
+          </h2>
+
+        </div>
+
+        <div class="stat-card">
+
+          <h4>
+            Status
+          </h4>
+
+          <h2>
+
+            <%= job.status || "Assigned" %>
+
+          </h2>
+
+        </div>
+
+        <div class="stat-card">
+
+          <h4>
+            Due Date
+          </h4>
+
+          <h2>
+
+            <%= job.dueDate
+              ? new Date(
+                  job.dueDate
+                ).toLocaleDateString()
+              : "-"
+            %>
+
+          </h2>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ===================================== -->
+    <!-- JOB DETAILS -->
+    <!-- ===================================== -->
+
+    <section
+      class="content-card"
+      style="margin-top:20px;"
+    >
+
+      <h3>
+
+        Maintenance Request
+
+      </h3>
+
+      <table>
+
+        <tbody>
+
+          <tr>
+
+            <th>
+              Title
+            </th>
+
+            <td>
+
+              <%= job.title || "-" %>
+
+            </td>
+
+          </tr>
+
+          <tr>
+
+            <th>
+              Category
+            </th>
+
+            <td>
+
+              <%= job.category || "-" %>
+
+            </td>
+
+          </tr>
+
+          <tr>
+
+            <th>
+              Created Date
+            </th>
+
+            <td>
+
+              <%= job.createdAt
+                ? new Date(
+                    job.createdAt
+                  ).toLocaleString()
+                : "-"
+              %>
+
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </section>
+
+    <!-- ===================================== -->
+    <!-- RESIDENT DETAILS -->
+    <!-- ===================================== -->
+
+    <section
+      class="content-card"
+      style="margin-top:20px;"
+    >
+
+      <h3>
+
+        Resident Information
+
+      </h3>
+
+      <table>
+
+        <tbody>
+
+          <tr>
+
+            <th>
+              Name
+            </th>
+
+            <td>
+
+              <%= resident.name || "-" %>
+
+            </td>
+
+          </tr>
+
+          <tr>
+
+            <th>
+              Email
+            </th>
+
+            <td>
+
+              <%= resident.email || "-" %>
+
+            </td>
+
+          </tr>
+
+          <tr>
+
+            <th>
+              Phone
+            </th>
+
+            <td>
+
+              <%= resident.phone || "-" %>
+
+            </td>
+
+          </tr>
+
+          <tr>
+
+            <th>
+              Apartment
+            </th>
+
+            <td>
+
+              <%= resident.apartment || "-" %>
+
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </section>
+
+    <!-- ===================================== -->
+    <!-- DESCRIPTION -->
+    <!-- ===================================== -->
+
+    <section
+      class="content-card"
+      style="margin-top:20px;"
+    >
+
+      <h3>
+
+        Issue Description
+
+      </h3>
+
+      <p>
+
+        <%= job.description ||
+          "No description provided."
+        %>
+
+      </p>
+
+    </section>
+
+    <!-- ===================================== -->
+    <!-- ISSUE IMAGES -->
+    <!-- ===================================== -->
+
+    <section
+      class="content-card"
+      style="margin-top:20px;"
+    >
+
+      <h3>
+
+        Uploaded Images
+
+      </h3>
+
+      <div
+        class="stats-grid"
+      >
+
+        <% if (
+          job.images &&
+          job.images.length
+        ) { %>
+
+          <% job.images.forEach(
+            image => {
+          %>
+
+            <img
+              src="<%= image.url %>"
+              alt="Issue"
+              style="
+                width:100%;
+                height:220px;
+                object-fit:cover;
+                border-radius:16px;
+              "
+            >
+
+          <% }) %>
+
+        <% } else { %>
+
+          <div
+            class="empty-state"
+          >
+
+            No images uploaded.
+
+          </div>
+
+        <% } %>
+
+      </div>
+
+    </section>
+
+    <!-- ===================================== -->
+    <!-- STAFF NOTES -->
+    <!-- ===================================== -->
+
+    <section
+      class="content-card"
+      style="margin-top:20px;"
+    >
+
+      <h3>
+
+        Work Notes
+
+      </h3>
+
+      <textarea
+        rows="6"
+        class="search-box"
+        style="
+          width:100%;
+          resize:none;
+        "
+        placeholder="Add work notes..."
+      ><%= job.staffNotes || "" %></textarea>
+
+    </section>
+
+    <!-- ===================================== -->
+    <!-- COMPLETION PHOTOS -->
+    <!-- ===================================== -->
+
+    <section
+      class="content-card"
+      style="margin-top:20px;"
+    >
+
+      <h3>
+
+        Completion Photos
+
+      </h3>
+
+      <input
+        type="file"
+        multiple
+      >
+
+      <p
+        style="
+          margin-top:10px;
+          color:var(--text-muted);
+        "
+      >
+
+        Upload proof of completed work.
+
+      </p>
+
+    </section>
+
+    <!-- ===================================== -->
+    <!-- ACTIONS -->
+    <!-- ===================================== -->
+
+    <section
+      class="action-buttons"
+      style="
+        margin-top:20px;
+        justify-content:flex-end;
+      "
+    >
+
+      <button
+        class="btn btn-primary"
+      >
+
+        <i class="fas fa-play"></i>
+
+        Start Work
+
+      </button>
+
+      <button
+        class="btn btn-success"
+      >
+
+        <i class="fas fa-floppy-disk"></i>
+
+        Save Notes
+
+      </button>
+
+      <button
+        class="btn btn-success"
+      >
+
+        <i class="fas fa-circle-check"></i>
+
+        Mark Completed
+
+      </button>
+
+    </section>
+
+    <%- include("../partials/dashboard-footer") %>
+
+  </main>
+
+</div>
+
+<script src="/js/dashboard.js"></script>
+
+</body>
+
+</html>

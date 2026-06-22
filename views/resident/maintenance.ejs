@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    Maintenance Tracking | ResolveStation
+  </title>
+
+  <link
+    rel="stylesheet"
+    href="/css/dashboard.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+  >
+
+</head>
+
+<body>
+
+<div class="dashboard-container">
+
+  <%- include("../partials/resident-sidebar") %>
+
+  <main class="dashboard-main">
+
+    <%- include("../partials/dashboard-header") %>
+
+    <!-- ===================================== -->
+    <!-- PAGE HEADER -->
+    <!-- ===================================== -->
+
+    <section class="page-header">
+
+      <div>
+
+        <h1>
+
+          <i class="fas fa-screwdriver-wrench"></i>
+
+          Maintenance Requests
+
+        </h1>
+
+        <p>
+
+          Track assigned maintenance work and progress updates.
+
+        </p>
+
+      </div>
+
+    </section>
+
+    <!-- ===================================== -->
+    <!-- STATS -->
+    <!-- ===================================== -->
+
+    <section class="stats-grid">
+
+      <div class="stat-card blue">
+
+        <h4>
+
+          Total Requests
+
+        </h4>
+
+        <h2>
+
+          <%= stats?.total || 0 %>
+
+        </h2>
+
+      </div>
+
+      <div class="stat-card orange">
+
+        <h4>
+
+          Assigned
+
+        </h4>
+
+        <h2>
+
+          <%= stats?.assigned || 0 %>
+
+        </h2>
+
+      </div>
+
+      <div class="stat-card purple">
+
+        <h4>
+
+          In Progress
+
+        </h4>
+
+        <h2>
+
+          <%= stats?.inProgress || 0 %>
+
+        </h2>
+
+      </div>
+
+      <div class="stat-card green">
+
+        <h4>
+
+          Completed
+
+        </h4>
+
+        <h2>
+
+          <%= stats?.completed || 0 %>
+
+        </h2>
+
+      </div>
+
+    </section>
+
+    <!-- ===================================== -->
+    <!-- REQUESTS -->
+    <!-- ===================================== -->
+
+    <section class="content-card">
+
+      <h3>
+
+        Maintenance History
+
+      </h3>
+
+      <div class="table-wrapper">
+
+        <table>
+
+          <thead>
+
+            <tr>
+
+              <th>
+                Ticket
+              </th>
+
+              <th>
+                Issue
+              </th>
+
+              <th>
+                Assigned Staff
+              </th>
+
+              <th>
+                Status
+              </th>
+
+              <th>
+                Last Updated
+              </th>
+
+              <th>
+                Action
+              </th>
+
+            </tr>
+
+          </thead>
+
+          <tbody>
+
+            <% if (
+              requests &&
+              requests.length
+            ) { %>
+
+              <% requests.forEach(
+                request => {
+              %>
+
+                <tr>
+
+                  <td>
+
+                    #<%= request.ticketId %>
+
+                  </td>
+
+                  <td>
+
+                    <%= request.title %>
+
+                  </td>
+
+                  <td>
+
+                    <%= request.assignedStaff?.name || "Pending Assignment" %>
+
+                  </td>
+
+                  <td>
+
+                    <% if (
+                      request.status === "ASSIGNED"
+                    ) { %>
+
+                      <span class="badge badge-primary">
+
+                        Assigned
+
+                      </span>
+
+                    <% } else if (
+                      request.status === "IN_PROGRESS"
+                    ) { %>
+
+                      <span class="badge badge-warning">
+
+                        In Progress
+
+                      </span>
+
+                    <% } else { %>
+
+                      <span class="badge badge-success">
+
+                        Completed
+
+                      </span>
+
+                    <% } %>
+
+                  </td>
+
+                  <td>
+
+                    <%= request.updatedAt
+                      ? new Date(
+                          request.updatedAt
+                        ).toLocaleDateString()
+                      : "-"
+                    %>
+
+                  </td>
+
+                  <td>
+
+                    <a
+                      href="/resident/maintenance/<%= request._id %>"
+                      class="btn btn-sm btn-outline"
+                    >
+
+                      View
+
+                    </a>
+
+                  </td>
+
+                </tr>
+
+              <% }) %>
+
+            <% } else { %>
+
+              <tr>
+
+                <td
+                  colspan="6"
+                  class="empty-state"
+                >
+
+                  No maintenance requests found.
+
+                </td>
+
+              </tr>
+
+            <% } %>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </section>
+
+    <!-- ===================================== -->
+    <!-- RECENT ACTIVITY -->
+    <!-- ===================================== -->
+
+    <section
+      class="content-card"
+      style="margin-top:20px;"
+    >
+
+      <h3>
+
+        Recent Updates
+
+      </h3>
+
+      <div class="timeline">
+
+        <div class="timeline-item">
+
+          <strong>
+
+            Staff Assigned
+
+          </strong>
+
+          <p>
+
+            Maintenance request assigned to technician.
+
+          </p>
+
+        </div>
+
+        <div class="timeline-item">
+
+          <strong>
+
+            Work Started
+
+          </strong>
+
+          <p>
+
+            Technician started maintenance work.
+
+          </p>
+
+        </div>
+
+        <div class="timeline-item">
+
+          <strong>
+
+            Work Completed
+
+          </strong>
+
+          <p>
+
+            Awaiting admin verification.
+
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <%- include("../partials/dashboard-footer") %>
+
+  </main>
+
+</div>
+
+<script src="/js/dashboard.js"></script>
+
+</body>
+
+</html>

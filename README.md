@@ -91,7 +91,7 @@ ResolveStation provides secure user authentication, staff management, resident m
 
 ## 📂 Project Structure
 
-```bash
+bash
 app
 ├── config
 ├── controllers
@@ -107,7 +107,7 @@ app
 
 public
 views
-```
+
 
 ---
 
@@ -115,7 +115,7 @@ views
 
 Create a `.env` file:
 
-```env
+env
 PORT=5131
 
 NODE_ENV=development
@@ -136,7 +136,7 @@ CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_API_SECRET=your_api_secret
 
 DEFAULT_AVATAR_URL=your_default_avatar
-```
+
 
 ---
 
@@ -144,21 +144,21 @@ DEFAULT_AVATAR_URL=your_default_avatar
 
 Clone the repository:
 
-```bash
+bash
 git clone https://github.com/yourusername/resolve-station.git
-```
+
 
 Install dependencies:
 
-```bash
+bash
 npm install
-```
+
 
 Run the application:
 
-```bash
+bash
 npm run dev
-```
+
 
 ---
 
@@ -166,10 +166,10 @@ npm run dev
 
 Admin account is automatically seeded on first startup.
 
-```text
+text
 Email: admin@resolvestation.com
 Password: ********
-```
+
 
 Configure credentials through environment variables.
 
@@ -205,3 +205,53 @@ Backend Developer | MERN Stack Developer
 ## 📄 License
 
 This project is developed for educational and portfolio purposes.
+
+
+
+
+
+
+
+views/
+│
+├── admin/
+│   ├── dashboard.ejs
+│   ├── staff.ejs
+│   ├── staff-create.ejs
+│   ├── staff-view.ejs
+│   ├── staff-edit.ejs
+│   │
+│   ├── residents.ejs
+│   ├── resident-view.ejs
+│   │
+│   ├── maintenance.ejs
+│   ├── maintenance-view.ejs
+│   │
+│   ├── trash.ejs
+│   ├── audit-logs.ejs
+│
+├── auth/
+│   ├── login.ejs
+│   ├── register.ejs
+│   ├── forgot-password.ejs
+│   ├── reset-password.ejs
+│   ├── verify-email.ejs
+│
+├── staff/
+│   ├── dashboard.ejs
+│   ├── assigned-jobs.ejs
+│   ├── completed-jobs.ejs
+│   ├── profile.ejs
+│
+├── resident/
+│   ├── dashboard.ejs
+│   ├── create-request.ejs
+│   ├── my-requests.ejs
+│   ├── profile.ejs
+│
+└── partials/
+    ├── admin-sidebar.ejs
+    ├── staff-sidebar.ejs
+    ├── resident-sidebar.ejs
+    ├── dashboard-header.ejs
+    ├── dashboard-footer.ejs

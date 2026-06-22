@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    Admin Dashboard | ResolveStation
+  </title>
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="/css/dashboard.css"
+  >
+
+</head>
+
+<body>
+
+<div class="dashboard-container">
+
+  <%- include("../partials/admin-sidebar") %>
+
+  <main class="dashboard-main">
+
+    <%- include("../partials/dashboard-header") %>
+
+    <!-- ===================================== -->
+    <!-- PAGE TITLE -->
+    <!-- ===================================== -->
+
+    <section class="dashboard-title">
+
+      <h1>
+        Welcome Back,
+        <%= user?.name || "Admin" %>
+      </h1>
+
+      <p>
+        Monitor residents, staff, maintenance requests and system activities.
+      </p>
+
+    </section>
+
+    <!-- ===================================== -->
+    <!-- STATISTICS -->
+    <!-- ===================================== -->
+
+    <section class="stats-grid">
+
+      <div class="stat-card gold">
+
+        <div class="stat-icon icon-gold">
+
+          <i class="fas fa-users"></i>
+
+        </div>
+
+        <h4>
+          Total Residents
+        </h4>
+
+        <h2>
+          <%= stats?.totalResidents || 0 %>
+        </h2>
+
+      </div>
+
+      <div class="stat-card blue">
+
+        <div class="stat-icon icon-blue">
+
+          <i class="fas fa-user-tie"></i>
+
+        </div>
+
+        <h4>
+          Total Staff
+        </h4>
+
+        <h2>
+          <%= stats?.totalStaff || 0 %>
+        </h2>
+
+      </div>
+
+      <div class="stat-card purple">
+
+        <div class="stat-icon icon-purple">
+
+          <i class="fas fa-clock"></i>
+
+        </div>
+
+        <h4>
+          Pending Approvals
+        </h4>
+
+        <h2>
+          <%= stats?.pendingApprovals || 0 %>
+        </h2>
+
+      </div>
+
+      <div class="stat-card green">
+
+        <div class="stat-icon icon-green">
+
+          <i class="fas fa-screwdriver-wrench"></i>
+
+        </div>
+
+        <h4>
+          Active Jobs
+        </h4>
+
+        <h2>
+          <%= stats?.activeJobs || 0 %>
+        </h2>
+
+      </div>
+
+    </section>
+
+    <!-- ===================================== -->
+    <!-- ANALYTICS + QUICK ACTIONS -->
+    <!-- ===================================== -->
+
+    <section class="content-grid">
+
+      <!-- Analytics -->
+
+      <div class="content-card">
+
+        <h3>
+          Analytics Overview
+        </h3>
+
+        <div class="chart-container">
+
+          <canvas
+            id="analyticsChart"
+          ></canvas>
+
+        </div>
+
+      </div>
+
+      <!-- Quick Actions -->
+
+      <div class="content-card">
+
+        <h3>
+          Quick Actions
+        </h3>
+
+        <div class="quick-actions">
+
+          <a
+            href="/admin/staff"
+            class="btn btn-primary"
+          >
+
+            <i class="fas fa-user-plus"></i>
+
+            Staff Management
+
+          </a>
+
+          <a
+            href="/admin/residents"
+            class="btn btn-primary"
+          >
+
+            <i class="fas fa-users"></i>
+
+            Residents
+
+          </a>
+
+          <a
+            href="/admin/maintenance"
+            class="btn btn-primary"
+          >
+
+            <i class="fas fa-screwdriver-wrench"></i>
+
+            Maintenance
+
+          </a>
+
+          <a
+            href="/admin/trash"
+            class="btn btn-primary"
+          >
+
+            <i class="fas fa-trash"></i>
+
+            Trash
+
+          </a>
+
+          <a
+            href="/admin/audit-logs"
+            class="btn btn-primary"
+          >
+
+            <i class="fas fa-file-shield"></i>
+
+            Audit Logs
+
+          </a>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ===================================== -->
+    <!-- RECENT ACTIVITIES -->
+    <!-- ===================================== -->
+
+    <section class="content-card">
+
+      <h3>
+        Recent Activities
+      </h3>
+
+      <div class="table-wrapper">
+
+        <table>
+
+          <thead>
+
+            <tr>
+
+              <th>
+                Action
+              </th>
+
+              <th>
+                User
+              </th>
+
+              <th>
+                Date
+              </th>
+
+            </tr>
+
+          </thead>
+
+          <tbody>
+
+            <% if (
+              recentActivities &&
+              recentActivities.length
+            ) { %>
+
+              <% recentActivities.forEach(activity => { %>
+
+                <tr>
+
+                  <td>
+                    <%= activity.action %>
+                  </td>
+
+                  <td>
+                    <%= activity.userName %>
+                  </td>
+
+                  <td>
+                    <%= new Date(
+                      activity.createdAt
+                    ).toLocaleString()
+                    %>
+                  </td>
+
+                </tr>
+
+              <% }) %>
+
+            <% } else { %>
+
+              <tr>
+
+                <td
+                  colspan="3"
+                  class="empty-state"
+                >
+
+                  No recent activities found.
+
+                </td>
+
+              </tr>
+
+            <% } %>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </section>
+
+    <%- include("../partials/dashboard-footer") %>
+
+  </main>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script src="/js/dashboard.js"></script>
+
+<script>
+
+const ctx =
+  document.getElementById(
+    "analyticsChart"
+  );
+
+if (ctx) {
+
+  new Chart(ctx, {
+
+    type: "line",
+
+    data: {
+
+      labels: [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun"
+      ],
+
+      datasets: [
+
+        {
+          label:
+            "Maintenance Requests",
+
+          data: [
+            12,
+            19,
+            8,
+            15,
+            24,
+            30
+          ],
+
+          borderColor:
+            "#D4AF37",
+
+          backgroundColor:
+            "rgba(212,175,55,.12)",
+
+          fill: true,
+
+          tension: .4
+
+        }
+
+      ]
+
+    },
+
+    options: {
+
+      responsive: true,
+
+      maintainAspectRatio: false,
+
+      plugins: {
+
+        legend: {
+
+          display: true
+
+        }
+
+      }
+
+    }
+
+  });
+
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Resident Dashboard | ResolveStation</title>
+
+    <link rel="stylesheet" href="/css/dashboard.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    />
+  </head>
+
+  <body>
+    <div class="dashboard-container">
+      <%- include("../partials/resident-sidebar") %>
+
+      <main class="dashboard-main">
+        <%- include("../partials/dashboard-header") %>
+
+        <section class="dashboard-title">
+          <h1>Welcome Back, <%= user.name %></h1>
+
+          <p>Track complaints and maintenance requests.</p>
+        </section>
+
+        <section class="stats-grid">
+          <div class="stat-card blue">
+            <h4>Total Complaints</h4>
+
+            <h2><%= stats?.totalComplaints || 0 %></h2>
+          </div>
+
+          <div class="stat-card orange">
+            <h4>Pending Requests</h4>
+
+            <h2><%= stats?.pending || 0 %></h2>
+          </div>
+
+          <div class="stat-card green">
+            <h4>Completed Requests</h4>
+
+            <h2><%= stats?.completed || 0 %></h2>
+          </div>
+
+          <div class="stat-card purple">
+            <h4>Notifications</h4>
+
+            <h2><%= stats?.notifications || 0 %></h2>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="/js/dashboard.js"></script>
+  </body>
+</html>

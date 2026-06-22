@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0"
+
+>
+
+  <title>
+    Maintenance Requests | ResolveStation
+  </title>
+
+  <link
+    rel="stylesheet"
+    href="/css/dashboard.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+  >
+
+</head>
+
+<body>
+
+<div class="dashboard-container">
+
+<%- include("../partials/admin-sidebar") %>
+
+  <main class="dashboard-main">
+
+<%- include("../partials/dashboard-header") %>
+
+<!-- ===================================== -->
+<!-- PAGE HEADER -->
+<!-- ===================================== -->
+
+<section class="page-header">
+
+  <div>
+
+    <h1>
+
+      <i class="fas fa-screwdriver-wrench"></i>
+
+      Maintenance Requests
+
+    </h1>
+
+    <p>
+
+      Manage, assign and monitor maintenance requests.
+
+    </p>
+
+  </div>
+
+</section>
+
+<!-- ===================================== -->
+<!-- STATISTICS -->
+<!-- ===================================== -->
+
+<section class="stats-grid">
+
+  <div class="stat-card gold">
+
+    <div class="stat-icon icon-gold">
+
+      <i class="fas fa-list-check"></i>
+
+    </div>
+
+    <h4>
+      Total Requests
+    </h4>
+
+    <h2>
+      <%= stats?.totalRequests || 0 %>
+    </h2>
+
+  </div>
+
+  <div class="stat-card purple">
+
+    <div class="stat-icon icon-purple">
+
+      <i class="fas fa-hourglass-half"></i>
+
+    </div>
+
+    <h4>
+      Pending Approval
+    </h4>
+
+    <h2>
+      <%= stats?.pendingApproval || 0 %>
+    </h2>
+
+  </div>
+
+  <div class="stat-card blue">
+
+    <div class="stat-icon icon-blue">
+
+      <i class="fas fa-user-gear"></i>
+
+    </div>
+
+    <h4>
+      Assigned
+    </h4>
+
+    <h2>
+      <%= stats?.assigned || 0 %>
+    </h2>
+
+  </div>
+
+  <div class="stat-card orange">
+
+    <div class="stat-icon icon-orange">
+
+      <i class="fas fa-spinner"></i>
+
+    </div>
+
+    <h4>
+      In Progress
+    </h4>
+
+    <h2>
+      <%= stats?.inProgress || 0 %>
+    </h2>
+
+  </div>
+
+  <div class="stat-card green">
+
+    <div class="stat-icon icon-green">
+
+      <i class="fas fa-circle-check"></i>
+
+    </div>
+
+    <h4>
+      Completed
+    </h4>
+
+    <h2>
+      <%= stats?.completed || 0 %>
+    </h2>
+
+  </div>
+
+  <div class="stat-card red">
+
+    <div class="stat-icon icon-red">
+
+      <i class="fas fa-triangle-exclamation"></i>
+
+    </div>
+
+    <h4>
+      Overdue
+    </h4>
+
+    <h2>
+      <%= stats?.overdue || 0 %>
+    </h2>
+
+  </div>
+
+</section>
+
+<!-- ===================================== -->
+<!-- FILTERS -->
+<!-- ===================================== -->
+
+<section class="table-toolbar">
+
+  <input
+    type="text"
+    class="search-box"
+    placeholder="Search maintenance requests..."
+  >
+
+  <div class="toolbar-actions">
+
+    <select>
+
+      <option>
+        All Status
+      </option>
+
+      <option>
+        Pending Approval
+      </option>
+
+      <option>
+        Approved
+      </option>
+
+      <option>
+        Assigned
+      </option>
+
+      <option>
+        In Progress
+      </option>
+
+      <option>
+        Completed
+      </option>
+
+      <option>
+        Rejected
+      </option>
+
+      <option>
+        Overdue
+      </option>
+
+    </select>
+
+    <select>
+
+      <option>
+        All Priorities
+      </option>
+
+      <option>
+        Low
+      </option>
+
+      <option>
+        Medium
+      </option>
+
+      <option>
+        High
+      </option>
+
+      <option>
+        Critical
+      </option>
+
+    </select>
+
+    <select>
+
+      <option>
+        Newest First
+      </option>
+
+      <option>
+        Oldest First
+      </option>
+
+    </select>
+
+  </div>
+
+</section>
+
+<!-- ===================================== -->
+<!-- REQUEST TABLE -->
+<!-- ===================================== -->
+
+<section class="content-card">
+
+  <div class="table-wrapper">
+
+    <table>
+
+      <thead>
+
+        <tr>
+
+          <th>
+            Ticket ID
+          </th>
+
+          <th>
+            Title
+          </th>
+
+          <th>
+            Resident
+          </th>
+
+          <th>
+            Assigned Staff
+          </th>
+
+          <th>
+            Priority
+          </th>
+
+          <th>
+            Status
+          </th>
+
+          <th>
+            Due Date
+          </th>
+
+          <th>
+            Created
+          </th>
+
+          <th>
+            Actions
+          </th>
+
+        </tr>
+
+      </thead>
+
+      <tbody>
+
+        <% if (
+          requests &&
+          requests.length
+        ) { %>
+
+          <% requests.forEach(
+            request => {
+          %>
+
+            <tr>
+
+              <td>
+
+                #<%= request.ticketId %>
+
+              </td>
+
+              <td>
+
+                <%= request.title %>
+
+              </td>
+
+              <td>
+
+                <%= request.resident?.name || "N/A" %>
+
+              </td>
+
+              <td>
+
+                <%= request.assignedStaff?.name || "Unassigned" %>
+
+              </td>
+
+              <td>
+
+                <%= request.priority %>
+
+              </td>
+
+              <td>
+
+                <%= request.status %>
+
+              </td>
+
+              <td>
+
+                <%= request.dueDate
+                  ? new Date(
+                      request.dueDate
+                    ).toLocaleDateString()
+                  : "-"
+                %>
+
+              </td>
+
+              <td>
+
+                <%= new Date(
+                  request.createdAt
+                ).toLocaleDateString()
+                %>
+
+              </td>
+
+              <td>
+
+                <div class="action-buttons">
+
+                  <a
+                    href="/admin/maintenance/<%= request._id %>"
+                    class="btn btn-sm btn-outline"
+                  >
+
+                    <i class="fas fa-eye"></i>
+
+                  </a>
+
+                  <% if (
+                    request.status ===
+                    "PENDING_APPROVAL"
+                  ) { %>
+
+                    <button
+                      class="btn btn-sm btn-success"
+                    >
+
+                      <i class="fas fa-check"></i>
+
+                    </button>
+
+                  <% } %>
+
+                  <button
+                    class="btn btn-sm btn-danger"
+                  >
+
+                    <i class="fas fa-trash"></i>
+
+                  </button>
+
+                </div>
+
+              </td>
+
+            </tr>
+
+          <% }) %>
+
+        <% } else { %>
+
+          <tr>
+
+            <td
+              colspan="9"
+              class="empty-state"
+            >
+
+              <i
+                class="fas fa-screwdriver-wrench"
+                style="
+                  font-size:42px;
+                  margin-bottom:15px;
+                "
+              ></i>
+
+              <br>
+
+              No maintenance requests found.
+
+            </td>
+
+          </tr>
+
+        <% } %>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</section>
+
+<!-- ===================================== -->
+<!-- PAGINATION -->
+<!-- ===================================== -->
+
+<section class="pagination">
+
+  <button
+    class="btn btn-outline"
+  >
+
+    Previous
+
+  </button>
+
+  <button
+    class="btn btn-primary"
+  >
+
+    1
+
+  </button>
+
+  <button
+    class="btn btn-outline"
+  >
+
+    Next
+
+  </button>
+
+</section>
+
+<%- include("../partials/dashboard-footer") %>
+
+
+  </main>
+
+</div>
+
+<script src="/js/dashboard.js"></script>
+
+</body>
+</html>

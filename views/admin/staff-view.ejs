@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    Staff Profile | ResolveStation
+  </title>
+
+  <link
+    rel="stylesheet"
+    href="/css/dashboard.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+  >
+
+</head>
+
+<body>
+
+<div class="dashboard-container">
+
+  <%- include("../partials/admin-sidebar") %>
+
+  <main class="dashboard-main">
+
+    <%- include("../partials/dashboard-header") %>
+
+    <!-- PAGE HEADER -->
+
+    <section class="page-header">
+
+      <div>
+
+        <h1>
+
+          <i class="fas fa-user"></i>
+
+          Staff Profile
+
+        </h1>
+
+        <p>
+
+          View staff account details.
+
+        </p>
+
+      </div>
+
+      <div class="action-buttons">
+
+        <a
+          href="/admin/staff"
+          class="btn btn-outline"
+        >
+
+          <i class="fas fa-arrow-left"></i>
+
+          Back
+
+        </a>
+
+        <a
+          href="/admin/staff/<%= staff._id %>/edit"
+          class="btn btn-primary"
+        >
+
+          <i class="fas fa-pen"></i>
+
+          Edit
+
+        </a>
+
+      </div>
+
+    </section>
+
+    <!-- PROFILE CARD -->
+
+    <section class="content-card">
+
+      <div
+        style="
+          display:flex;
+          flex-wrap:wrap;
+          gap:30px;
+          align-items:center;
+        "
+      >
+
+        <img
+          src="<%= staff.profileImage?.url || '/images/default-avatar.png' %>"
+          alt="Staff"
+          class="user-avatar"
+          style="
+            width:120px;
+            height:120px;
+          "
+        >
+
+        <div>
+
+          <h2>
+
+            <%= staff.name %>
+
+          </h2>
+
+          <p>
+
+            <%= staff.email %>
+
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ACCOUNT DETAILS -->
+
+    <section
+      class="content-card"
+      style="margin-top:20px;"
+    >
+
+      <h3>
+
+        Account Information
+
+      </h3>
+
+      <div class="table-wrapper">
+
+        <table>
+
+          <tbody>
+
+            <tr>
+
+              <th>
+                Role
+              </th>
+
+              <td>
+                <%= staff.role %>
+              </td>
+
+            </tr>
+
+            <tr>
+
+              <th>
+                Email Verified
+              </th>
+
+              <td>
+
+                <% if (
+                  staff.isVerified
+                ) { %>
+
+                  <span class="badge badge-active">
+
+                    Verified
+
+                  </span>
+
+                <% } else { %>
+
+                  <span class="badge badge-pending">
+
+                    Pending
+
+                  </span>
+
+                <% } %>
+
+              </td>
+
+            </tr>
+
+            <tr>
+
+              <th>
+                Profile Completed
+              </th>
+
+              <td>
+
+                <% if (
+                  staff.profileCompleted
+                ) { %>
+
+                  <span class="badge badge-active">
+
+                    Completed
+
+                  </span>
+
+                <% } else { %>
+
+                  <span class="badge badge-pending">
+
+                    Incomplete
+
+                  </span>
+
+                <% } %>
+
+              </td>
+
+            </tr>
+
+            <tr>
+
+              <th>
+                Last Login
+              </th>
+
+              <td>
+
+                <%= staff.lastLoginAt
+                  ? new Date(
+                      staff.lastLoginAt
+                    ).toLocaleString()
+                  : "Never Logged In"
+                %>
+
+              </td>
+
+            </tr>
+
+            <tr>
+
+              <th>
+                Last Login IP
+              </th>
+
+              <td>
+
+                <%= staff.lastLoginIP || "N/A" %>
+
+              </td>
+
+            </tr>
+
+            <tr>
+
+              <th>
+                Created At
+              </th>
+
+              <td>
+
+                <%= new Date(
+                  staff.createdAt
+                ).toLocaleString()
+                %>
+
+              </td>
+
+            </tr>
+
+            <tr>
+
+              <th>
+                Updated At
+              </th>
+
+              <td>
+
+                <%= new Date(
+                  staff.updatedAt
+                ).toLocaleString()
+                %>
+
+              </td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </section>
+
+    <!-- ACCOUNT STATUS -->
+
+    <section
+      class="stats-grid"
+      style="margin-top:20px;"
+    >
+
+      <div class="stat-card green">
+
+        <div class="stat-icon icon-green">
+
+          <i class="fas fa-circle-check"></i>
+
+        </div>
+
+        <h4>
+          Account Status
+        </h4>
+
+        <h2>
+
+          <%= staff.isDeleted
+            ? "Deleted"
+            : "Active"
+          %>
+
+        </h2>
+
+      </div>
+
+      <div class="stat-card blue">
+
+        <div class="stat-icon icon-blue">
+
+          <i class="fas fa-user-clock"></i>
+
+        </div>
+
+        <h4>
+          Login Attempts
+        </h4>
+
+        <h2>
+
+          <%= staff.loginAttempts || 0 %>
+
+        </h2>
+
+      </div>
+
+    </section>
+
+    <%- include("../partials/dashboard-footer") %>
+
+  </main>
+
+</div>
+
+<script src="/js/dashboard.js"></script>
+
+</body>
+</html>

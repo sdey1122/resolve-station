@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0"
+
+>
+
+  <title>
+    Resident Management | ResolveStation
+  </title>
+
+  <link
+    rel="stylesheet"
+    href="/css/dashboard.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+  >
+
+</head>
+
+<body>
+
+<div class="dashboard-container">
+
+<%- include("../partials/admin-sidebar") %>
+
+  <main class="dashboard-main">
+
+
+<%- include("../partials/dashboard-header") %>
+
+<!-- ===================================== -->
+<!-- PAGE HEADER -->
+<!-- ===================================== -->
+
+<section class="page-header">
+
+  <div>
+
+    <h1>
+
+      <i class="fas fa-users"></i>
+
+      Resident Management
+
+    </h1>
+
+    <p>
+
+      Manage all registered residents and monitor their activity.
+
+    </p>
+
+  </div>
+
+</section>
+
+<!-- ===================================== -->
+<!-- STATISTICS -->
+<!-- ===================================== -->
+
+<section class="stats-grid">
+
+  <div class="stat-card gold">
+
+    <div class="stat-icon icon-gold">
+
+      <i class="fas fa-users"></i>
+
+    </div>
+
+    <h4>
+      Total Residents
+    </h4>
+
+    <h2>
+      <%= residents?.length || 0 %>
+    </h2>
+
+  </div>
+
+  <div class="stat-card green">
+
+    <div class="stat-icon icon-green">
+
+      <i class="fas fa-circle-check"></i>
+
+    </div>
+
+    <h4>
+      Verified Residents
+    </h4>
+
+    <h2>
+      <%= verifiedResidents || 0 %>
+    </h2>
+
+  </div>
+
+  <div class="stat-card blue">
+
+    <div class="stat-icon icon-blue">
+
+      <i class="fas fa-user-check"></i>
+
+    </div>
+
+    <h4>
+      Profile Completed
+    </h4>
+
+    <h2>
+      <%= completedProfiles || 0 %>
+    </h2>
+
+  </div>
+
+  <div class="stat-card red">
+
+    <div class="stat-icon icon-red">
+
+      <i class="fas fa-trash"></i>
+
+    </div>
+
+    <h4>
+      Deleted Residents
+    </h4>
+
+    <h2>
+      <%= deletedResidents || 0 %>
+    </h2>
+
+  </div>
+
+</section>
+
+<!-- ===================================== -->
+<!-- SEARCH + FILTER -->
+<!-- ===================================== -->
+
+<section class="table-toolbar">
+
+  <input
+    type="text"
+    class="search-box"
+    placeholder="Search residents..."
+  >
+
+  <div class="toolbar-actions">
+
+    <select>
+
+      <option>
+        All Residents
+      </option>
+
+      <option>
+        Verified
+      </option>
+
+      <option>
+        Unverified
+      </option>
+
+      <option>
+        Deleted
+      </option>
+
+    </select>
+
+    <select>
+
+      <option>
+        Newest First
+      </option>
+
+      <option>
+        Oldest First
+      </option>
+
+      <option>
+        Name A-Z
+      </option>
+
+      <option>
+        Name Z-A
+      </option>
+
+    </select>
+
+  </div>
+
+</section>
+
+<!-- ===================================== -->
+<!-- RESIDENT TABLE -->
+<!-- ===================================== -->
+
+<section class="content-card">
+
+  <div class="table-wrapper">
+
+    <table>
+
+      <thead>
+
+        <tr>
+
+          <th>
+            Resident
+          </th>
+
+          <th>
+            Email
+          </th>
+
+          <th>
+            Verification
+          </th>
+
+          <th>
+            Profile
+          </th>
+
+          <th>
+            Requests
+          </th>
+
+          <th>
+            Joined
+          </th>
+
+          <th>
+            Status
+          </th>
+
+          <th>
+            Actions
+          </th>
+
+        </tr>
+
+      </thead>
+
+      <tbody>
+
+        <% if (
+          residents &&
+          residents.length
+        ) { %>
+
+          <% residents.forEach(
+            resident => {
+          %>
+
+            <tr>
+
+              <td>
+
+                <div class="user-cell">
+
+                  <img
+                    src="<%= resident.profileImage?.url || '/images/default-avatar.png' %>"
+                    alt="Resident"
+                    class="table-avatar"
+                  >
+
+                  <span>
+
+                    <%= resident.name %>
+
+                  </span>
+
+                </div>
+
+              </td>
+
+              <td>
+
+                <%= resident.email %>
+
+              </td>
+
+              <td>
+
+                <% if (
+                  resident.isVerified
+                ) { %>
+
+                  <span class="badge badge-active">
+
+                    Verified
+
+                  </span>
+
+                <% } else { %>
+
+                  <span class="badge badge-pending">
+
+                    Pending
+
+                  </span>
+
+                <% } %>
+
+              </td>
+
+              <td>
+
+                <% if (
+                  resident.profileCompleted
+                ) { %>
+
+                  <span class="badge badge-active">
+
+                    Completed
+
+                  </span>
+
+                <% } else { %>
+
+                  <span class="badge badge-pending">
+
+                    Incomplete
+
+                  </span>
+
+                <% } %>
+
+              </td>
+
+              <td>
+
+                <%= resident.openRequests || 0 %>
+
+              </td>
+
+              <td>
+
+                <%= new Date(
+                  resident.createdAt
+                ).toLocaleDateString()
+                %>
+
+              </td>
+
+              <td>
+
+                <% if (
+                  resident.isDeleted
+                ) { %>
+
+                  <span class="badge badge-deleted">
+
+                    Deleted
+
+                  </span>
+
+                <% } else { %>
+
+                  <span class="badge badge-active">
+
+                    Active
+
+                  </span>
+
+                <% } %>
+
+              </td>
+
+              <td>
+
+                <div class="action-buttons">
+
+                  <% if (
+                    !resident.isDeleted
+                  ) { %>
+
+                    <a
+                      href="/admin/residents/<%= resident._id %>"
+                      class="btn btn-sm btn-outline"
+                    >
+
+                      <i class="fas fa-eye"></i>
+
+                    </a>
+
+                    <button
+                      class="btn btn-sm btn-danger"
+                    >
+
+                      <i class="fas fa-trash"></i>
+
+                    </button>
+
+                  <% } else { %>
+
+                    <button
+                      class="btn btn-sm btn-success"
+                    >
+
+                      <i class="fas fa-rotate-left"></i>
+
+                    </button>
+
+                    <button
+                      class="btn btn-sm btn-danger"
+                    >
+
+                      <i class="fas fa-trash-can"></i>
+
+                    </button>
+
+                  <% } %>
+
+                </div>
+
+              </td>
+
+            </tr>
+
+          <% }) %>
+
+        <% } else { %>
+
+          <tr>
+
+            <td
+              colspan="8"
+              class="empty-state"
+            >
+
+              <i
+                class="fas fa-users-slash"
+                style="
+                  font-size:42px;
+                  margin-bottom:15px;
+                "
+              ></i>
+
+              <br>
+
+              No residents found.
+
+            </td>
+
+          </tr>
+
+        <% } %>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</section>
+
+<!-- ===================================== -->
+<!-- PAGINATION -->
+<!-- ===================================== -->
+
+<section class="pagination">
+
+  <button
+    class="btn btn-outline"
+  >
+
+    Previous
+
+  </button>
+
+  <button
+    class="btn btn-primary"
+  >
+
+    1
+
+  </button>
+
+  <button
+    class="btn btn-outline"
+  >
+
+    2
+
+  </button>
+
+  <button
+    class="btn btn-outline"
+  >
+
+    Next
+
+  </button>
+
+</section>
+
+<%- include("../partials/dashboard-footer") %>
+
+  </main>
+
+</div>
+
+<script src="/js/dashboard.js"></script>
+
+</body>
+</html>

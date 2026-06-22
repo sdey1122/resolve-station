@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    Staff Management | ResolveStation
+  </title>
+
+  <link
+    rel="stylesheet"
+    href="/css/dashboard.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+  >
+
+</head>
+
+<body>
+
+<div class="dashboard-container">
+
+  <%- include("../partials/admin-sidebar") %>
+
+  <main class="dashboard-main">
+
+    <%- include("../partials/dashboard-header") %>
+
+    <!-- PAGE HEADER -->
+
+    <section class="page-header">
+
+      <div>
+
+        <h1>
+          Staff Management
+        </h1>
+
+        <p>
+          Manage all staff accounts and permissions.
+        </p>
+
+      </div>
+
+      <button
+        class="btn btn-primary"
+      >
+
+        <i class="fas fa-user-plus"></i>
+
+        Create Staff
+
+      </button>
+
+    </section>
+
+    <!-- TOOLBAR -->
+
+    <section class="table-toolbar">
+
+      <input
+        type="text"
+        class="search-box"
+        placeholder="Search staff by name or email..."
+      >
+
+      <div class="toolbar-actions">
+
+        <select>
+
+          <option>
+            All Staff
+          </option>
+
+          <option>
+            Active
+          </option>
+
+          <option>
+            Deleted
+          </option>
+
+        </select>
+
+        <select>
+
+          <option>
+            Newest First
+          </option>
+
+          <option>
+            Oldest First
+          </option>
+
+          <option>
+            Name A-Z
+          </option>
+
+          <option>
+            Name Z-A
+          </option>
+
+        </select>
+
+      </div>
+
+    </section>
+
+    <!-- STAFF TABLE -->
+
+    <section class="content-card">
+
+      <div class="table-wrapper">
+
+        <table>
+
+          <thead>
+
+            <tr>
+
+              <th>
+                Staff
+              </th>
+
+              <th>
+                Email
+              </th>
+
+              <th>
+                Last Login
+              </th>
+
+              <th>
+                Status
+              </th>
+
+              <th>
+                Actions
+              </th>
+
+            </tr>
+
+          </thead>
+
+          <tbody>
+
+            <% if (
+              staff &&
+              staff.length
+            ) { %>
+
+              <% staff.forEach(member => { %>
+
+                <tr>
+
+                  <td>
+
+                    <div class="user-cell">
+
+                      <img
+                        src="<%= member.profileImage?.url || '/images/default-avatar.png' %>"
+                        alt="Staff"
+                        class="table-avatar"
+                      >
+
+                      <span>
+
+                        <%= member.name %>
+
+                      </span>
+
+                    </div>
+
+                  </td>
+
+                  <td>
+
+                    <%= member.email %>
+
+                  </td>
+
+                  <td>
+
+                    <%= member.lastLoginAt
+                      ? new Date(
+                          member.lastLoginAt
+                        ).toLocaleString()
+                      : "Never Logged In"
+                    %>
+
+                  </td>
+
+                  <td>
+
+                    <% if (
+                      member.isDeleted
+                    ) { %>
+
+                      <span class="badge deleted">
+
+                        Deleted
+
+                      </span>
+
+                    <% } else { %>
+
+                      <span class="badge active">
+
+                        Active
+
+                      </span>
+
+                    <% } %>
+
+                  </td>
+
+                  <td>
+
+                    <div class="action-buttons">
+
+                      <% if (
+                        !member.isDeleted
+                      ) { %>
+
+                        <button
+                          class="btn btn-sm btn-primary"
+                        >
+
+                          View
+
+                        </button>
+
+                        <button
+                          class="btn btn-sm btn-danger"
+                        >
+
+                          Delete
+
+                        </button>
+
+                      <% } else { %>
+
+                        <button
+                          class="btn btn-sm btn-success"
+                        >
+
+                          Restore
+
+                        </button>
+
+                        <button
+                          class="btn btn-sm btn-danger"
+                        >
+
+                          Permanent Delete
+
+                        </button>
+
+                      <% } %>
+
+                    </div>
+
+                  </td>
+
+                </tr>
+
+              <% }) %>
+
+            <% } else { %>
+
+              <tr>
+
+                <td
+                  colspan="5"
+                  class="empty-state"
+                >
+
+                  No staff members found.
+
+                </td>
+
+              </tr>
+
+            <% } %>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </section>
+
+    <!-- PAGINATION -->
+
+    <section
+      style="
+        margin-top:20px;
+        display:flex;
+        justify-content:center;
+        gap:10px;
+      "
+    >
+
+      <button
+        class="btn btn-outline"
+      >
+
+        Previous
+
+      </button>
+
+      <button
+        class="btn btn-primary"
+      >
+
+        1
+
+      </button>
+
+      <button
+        class="btn btn-outline"
+      >
+
+        2
+
+      </button>
+
+      <button
+        class="btn btn-outline"
+      >
+
+        Next
+
+      </button>
+
+    </section>
+
+    <%- include("../partials/dashboard-footer") %>
+
+  </main>
+
+</div>
+
+<script src="/js/dashboard.js"></script>
+
+</body>
+
+</html>

@@ -4,10 +4,15 @@
  * ==========================================
  */
 
-const notFoundMiddleware = (req, res, next) => {
-  res.status(404);
+const notFoundMiddleware = (req, res) => {
+  if (req.originalUrl.startsWith("/api")) {
+    return res.status(404).json({
+      success: false,
+      message: "Route not found.",
+    });
+  }
 
-  return res.render("errors/404");
+  return res.status(404).render("errors/404");
 };
 
 module.exports = notFoundMiddleware;

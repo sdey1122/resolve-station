@@ -47,6 +47,7 @@ const authMiddleware = async (req, res, next) => {
         message: "Please verify your email first.",
       });
     }
+    req.token = accessToken;
 
     req.user = user;
 

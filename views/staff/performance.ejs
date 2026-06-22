@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    Performance | ResolveStation
+  </title>
+
+  <link
+    rel="stylesheet"
+    href="/css/dashboard.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+  >
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+<div class="dashboard-container">
+
+  <%- include("../partials/staff-sidebar") %>
+
+  <main class="dashboard-main">
+
+    <%- include("../partials/dashboard-header") %>
+
+    <!-- ===================================== -->
+    <!-- PAGE HEADER -->
+    <!-- ===================================== -->
+
+    <section class="page-header">
+
+      <div>
+
+        <h1>
+
+          <i class="fas fa-chart-line"></i>
+
+          Performance Overview
+
+        </h1>
+
+        <p>
+
+          Monitor your maintenance performance and achievements.
+
+        </p>
+
+      </div>
+
+    </section>
+
+    <!-- ===================================== -->
+    <!-- STATS -->
+    <!-- ===================================== -->
+
+    <section class="stats-grid">
+
+      <div class="stat-card green">
+
+        <div class="stat-icon icon-green">
+
+          <i class="fas fa-circle-check"></i>
+
+        </div>
+
+        <h4>
+          Completed Jobs
+        </h4>
+
+        <h2>
+          <%= stats?.completedJobs || 0 %>
+        </h2>
+
+      </div>
+
+      <div class="stat-card blue">
+
+        <div class="stat-icon icon-blue">
+
+          <i class="fas fa-clock"></i>
+
+        </div>
+
+        <h4>
+          Avg Completion Time
+        </h4>
+
+        <h2>
+          <%= stats?.averageTime || 0 %>h
+        </h2>
+
+      </div>
+
+      <div class="stat-card purple">
+
+        <div class="stat-icon icon-purple">
+
+          <i class="fas fa-chart-pie"></i>
+
+        </div>
+
+        <h4>
+          Completion Rate
+        </h4>
+
+        <h2>
+          <%= stats?.completionRate || 0 %>%
+        </h2>
+
+      </div>
+
+      <div class="stat-card red">
+
+        <div class="stat-icon icon-red">
+
+          <i class="fas fa-triangle-exclamation"></i>
+
+        </div>
+
+        <h4>
+          Overdue Jobs
+        </h4>
+
+        <h2>
+          <%= stats?.overdueJobs || 0 %>
+        </h2>
+
+      </div>
+
+    </section>
+
+    <!-- ===================================== -->
+    <!-- CHART -->
+    <!-- ===================================== -->
+
+    <section class="content-card">
+
+      <h3>
+
+        Monthly Performance
+
+      </h3>
+
+      <div
+        style="
+          height:350px;
+          margin-top:20px;
+        "
+      >
+
+        <canvas
+          id="performanceChart"
+        ></canvas>
+
+      </div>
+
+    </section>
+
+    <!-- ===================================== -->
+    <!-- ACHIEVEMENTS -->
+    <!-- ===================================== -->
+
+    <section
+      class="content-card"
+      style="margin-top:20px;"
+    >
+
+      <h3>
+
+        Achievements
+
+      </h3>
+
+      <div class="stats-grid">
+
+        <div class="stat-card gold">
+
+          <h4>
+
+            First 10 Jobs
+
+          </h4>
+
+          <p>
+
+            Completed 10 maintenance jobs.
+
+          </p>
+
+        </div>
+
+        <div class="stat-card green">
+
+          <h4>
+
+            Reliable Worker
+
+          </h4>
+
+          <p>
+
+            Maintained 95% completion rate.
+
+          </p>
+
+        </div>
+
+        <div class="stat-card blue">
+
+          <h4>
+
+            Fast Response
+
+          </h4>
+
+          <p>
+
+            Average completion under 24 hours.
+
+          </p>
+
+        </div>
+
+        <div class="stat-card purple">
+
+          <h4>
+
+            Top Performer
+
+          </h4>
+
+          <p>
+
+            Completed 100+ requests.
+
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ===================================== -->
+    <!-- RECENT COMPLETED JOBS -->
+    <!-- ===================================== -->
+
+    <section
+      class="content-card"
+      style="margin-top:20px;"
+    >
+
+      <h3>
+
+        Recent Completed Jobs
+
+      </h3>
+
+      <div class="table-wrapper">
+
+        <table>
+
+          <thead>
+
+            <tr>
+
+              <th>
+                Ticket
+              </th>
+
+              <th>
+                Title
+              </th>
+
+              <th>
+                Completed On
+              </th>
+
+              <th>
+                Duration
+              </th>
+
+            </tr>
+
+          </thead>
+
+          <tbody>
+
+            <% if (
+              completedJobs &&
+              completedJobs.length
+            ) { %>
+
+              <% completedJobs.forEach(
+                job => {
+              %>
+
+                <tr>
+
+                  <td>
+
+                    #<%= job.ticketId %>
+
+                  </td>
+
+                  <td>
+
+                    <%= job.title %>
+
+                  </td>
+
+                  <td>
+
+                    <%= new Date(
+                      job.completedAt
+                    ).toLocaleDateString()
+                    %>
+
+                  </td>
+
+                  <td>
+
+                    <%= job.duration %>
+
+                  </td>
+
+                </tr>
+
+              <% }) %>
+
+            <% } else { %>
+
+              <tr>
+
+                <td
+                  colspan="4"
+                  class="empty-state"
+                >
+
+                  No completed jobs found.
+
+                </td>
+
+              </tr>
+
+            <% } %>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </section>
+
+    <%- include("../partials/dashboard-footer") %>
+
+  </main>
+
+</div>
+
+<script>
+
+const ctx =
+  document.getElementById(
+    "performanceChart"
+  );
+
+if (ctx) {
+
+  new Chart(ctx, {
+
+    type: "line",
+
+    data: {
+
+      labels: [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun"
+      ],
+
+      datasets: [
+
+        {
+
+          label:
+            "Completed Jobs",
+
+          data: [
+            12,
+            19,
+            25,
+            17,
+            32,
+            28
+          ],
+
+          tension: 0.4
+
+        }
+
+      ]
+
+    },
+
+    options: {
+
+      responsive: true,
+
+      maintainAspectRatio: false
+
+    }
+
+  });
+
+}
+
+</script>
+
+</body>
+
+</html>
