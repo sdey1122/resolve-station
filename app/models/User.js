@@ -60,6 +60,19 @@ const userSchema = new mongoose.Schema(
 
     /**
      * ==========================================
+     * ADMIN DESCRIPTION
+     * ==========================================
+     */
+
+    description: {
+      type: String,
+      trim: true,
+      maxlength: 500,
+      default: "",
+    },
+
+    /**
+     * ==========================================
      * ROLE MANAGEMENT
      * ==========================================
      */

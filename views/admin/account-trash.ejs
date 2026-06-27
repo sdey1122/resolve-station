@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Account Trash | ResolveStation</title>
+
+    <!-- Bootstrap -->
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Bootstrap Icons -->
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+    />
+
+    <!-- Dashboard CSS -->
+
+    <link rel="stylesheet" href="/css/admin.css" />
+  </head>
+
+  <body>
+    <!-- Overlay -->
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <div class="dashboard-wrapper">
+      <!-- Sidebar -->
+
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+          <img src="/images/logo/resolvestationlogo.png" alt="ResolveStation" />
+        </div>
+
+        <nav class="sidebar-nav">
+          <a href="/admin/dashboard" class="nav-link">
+            <i class="bi bi-grid"></i>
+
+            <span class="nav-text"> Dashboard </span>
+          </a>
+
+          <div class="nav-title">Staff Management</div>
+
+          <a href="/admin/staff/show" class="nav-link">
+            <i class="bi bi-people"></i>
+
+            <span class="nav-text"> View Staff </span>
+          </a>
+
+          <a href="/admin/staff/create" class="nav-link">
+            <i class="bi bi-person-plus"></i>
+
+            <span class="nav-text"> Manage Staff </span>
+          </a>
+
+
+          <div class="nav-divider"></div>
+
+          <div class="nav-title">Resident Management</div>
+
+          <a href="/admin/resident/show" class="nav-link">
+            <i class="bi bi-house-door"></i>
+
+            <span class="nav-text"> View Residents </span>
+          </a>
+
+          <div class="nav-divider"></div>
+
+          <div class="nav-title">System</div>
+
+          <a href="/admin/account-trash" class="nav-link active">
+            <i class="bi bi-trash"></i>
+
+            <span class="nav-text"> Account Trash </span>
+          </a>
+
+          <a href="/admin/audit-logs" class="nav-link">
+            <i class="bi bi-journal-text"></i>
+
+            <span class="nav-text"> Audit Logs </span>
+          </a>
+        </nav>
+
+        <button class="logout-btn" id="logoutBtn">
+          <i class="bi bi-box-arrow-right"></i>
+
+          <span class="logout-text"> Logout </span>
+        </button>
+      </aside>
+      <!-- Main Content -->
+
+      <main class="main-content" id="mainContent">
+        <!-- Header -->
+
+        <header class="dashboard-header">
+          <div class="header-left">
+            <button class="menu-toggle" id="menuToggle">
+              <i class="bi bi-list"></i>
+            </button>
+
+            <div class="welcome-section">
+              <h1>Welcome, <%= user.name %></h1>
+
+              <p>Administrator • <%= user.email %></p>
+            </div>
+          </div>
+
+          <div class="header-right">
+            <button class="notification-btn">
+              <i class="bi bi-bell"></i>
+            </button>
+
+            <a
+  href="/admin/profile"
+  class="profile-box"
+  title="My Profile"
+>
+  <img
+    src="<%= user.profileImage?.url %>"
+    alt="<%= user.name %>"
+  />
+</a>
+        </header>
+
+        <!-- Hero Banner -->
+
+        <section class="hero-banner">
+          <div>
+            <h2>Account Trash</h2>
+
+            <p>
+              Restore deleted accounts or permanently remove them from the
+              ResolveStation system.
+            </p>
+          </div>
+        </section>
+
+        <!-- Account Trash -->
+
+        <section class="staff-list-section">
+          <div class="staff-form-card">
+            <div class="form-card-header">
+              <h3>Deleted Accounts</h3>
+
+              <p>Manage deleted staff and resident accounts from one place.</p>
+            </div>
+
+            <!-- Search + Sort -->
+
+            <div class="staff-toolbar">
+              <div class="search-box">
+                <i class="bi bi-search search-icon"></i>
+
+                <input
+                  type="text"
+                  id="searchAccount"
+                  placeholder="Search deleted accounts..."
+                />
+              </div>
+
+              <select id="sortAccount" class="staff-sort">
+                <option value="newest">Recently Deleted</option>
+
+                <option value="oldest">Oldest Deleted</option>
+
+                <option value="az">A - Z</option>
+
+                <option value="za">Z - A</option>
+              </select>
+            </div>
+            <!-- Deleted Accounts Table -->
+
+            <div class="table-responsive">
+              <table class="table staff-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+
+                    <th>Profile</th>
+
+                    <th>Name</th>
+
+                    <th>Email</th>
+
+                    <th>Role</th>
+
+                    <th>Deleted On</th>
+
+                    <th>Action</th>
+                  </tr>
+                </thead>
+
+                <tbody id="trashTableBody">
+                  <!-- Dynamic Deleted Accounts -->
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Pagination -->
+
+            <div class="pagination-wrapper">
+              <button id="prevPage" class="pagination-btn">
+                <i class="bi bi-chevron-left"></i>
+              </button>
+
+              <span id="pageInfo"> Page 1 of 1 </span>
+
+              <button id="nextPage" class="pagination-btn">
+                <i class="bi bi-chevron-right"></i>
+              </button>
+            </div>
+          </div>
+        </section>
+     <!-- Restore Account Modal -->
+
+    <div
+      class="logout-modal"
+      id="restoreModal"
+    >
+      <div class="logout-modal-card">
+        <div class="logout-icon">
+          <i class="bi bi-arrow-counterclockwise"></i>
+        </div>
+
+        <h3>Restore Account</h3>
+
+        <p>
+          Are you sure you want to restore this account? The user will regain
+          access to ResolveStation immediately.
+        </p>
+
+        <div class="logout-actions">
+          <button
+            type="button"
+            class="cancel-btn"
+            id="cancelRestore"
+          >
+            Cancel
+          </button>
+
+          <button
+            type="button"
+            class="confirm-btn"
+            id="confirmRestore"
+          >
+            Yes, Restore
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Permanent Delete Modal -->
+
+    <div
+      class="logout-modal"
+      id="deleteModal"
+    >
+      <div class="logout-modal-card">
+        <div class="logout-icon">
+          <i class="bi bi-trash3-fill"></i>
+        </div>
+
+        <h3>Permanently Delete Account</h3>
+
+        <p>
+          This action cannot be undone. The selected account will be
+          permanently removed from ResolveStation forever.
+        </p>
+
+        <div class="logout-actions">
+          <button
+            type="button"
+            class="cancel-btn"
+            id="cancelDelete"
+          >
+            Cancel
+          </button>
+
+          <button
+            type="button"
+            class="confirm-btn"
+            id="confirmDelete"
+          >
+            Yes, Delete
+          </button>
+        </div>
+      </div>
+    </div>
+
+      <!-- Logout Modal -->
+
+    <div class="logout-modal" id="logoutModal">
+      <div class="logout-modal-card">
+        <div class="logout-icon">
+          <i class="bi bi-box-arrow-right"></i>
+        </div>
+
+        <h3>Logout Confirmation</h3>
+
+        <p>
+          Are you sure you want to logout from ResolveStation? You will need to
+          sign in again to access your dashboard.
+        </p>
+
+        <div class="logout-actions">
+          <button class="cancel-btn" id="cancelLogout">Cancel</button>
+
+          <button class="confirm-btn" id="confirmLogout">Yes, Logout</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Success Toast -->
+
+    <div
+      id="successToast"
+      class="success-toast"
+    >
+      <i class="bi bi-check-circle-fill"></i>
+
+      <div>
+        <h5 id="toastTitle">
+          Success
+        </h5>
+
+        <p id="toastMessage">
+          Operation completed successfully.
+        </p>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+
+    <script src="/js/admin.js"></script>
+
+    <script src="/js/account-trash.js"></script>
+  </body>
+</html>
+        

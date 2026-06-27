@@ -5,7 +5,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Admin Dashboard | ResolveStation</title>
+    <title>Create Staff | ResolveStation</title>
 
     <!-- Bootstrap -->
 
@@ -40,7 +40,7 @@
         </div>
 
         <nav class="sidebar-nav">
-          <a href="/admin/dashboard" class="nav-link active">
+          <a href="/admin/dashboard" class="nav-link">
             <i class="bi bi-grid"></i>
             <span class="nav-text">Dashboard</span>
           </a>
@@ -52,7 +52,7 @@
             <span class="nav-text">View Staff</span>
           </a>
 
-          <a href="/admin/staff/create" class="nav-link">
+          <a href="/admin/staff/create" class="nav-link active">
             <i class="bi bi-person-plus"></i>
             <span class="nav-text">Manage Staff</span>
           </a>
@@ -127,7 +127,9 @@
 
         <section class="hero-banner">
           <div>
-            <h2>ResolveStation Dashboard</h2>
+            <h2>
+              <%= staffId ? "Edit Staff Dashboard" : "Create Staff Dashboard" %>
+            </h2>
 
             <p>
               Manage staff, residents, complaints and system operations from one
@@ -136,39 +138,100 @@
           </div>
         </section>
 
-        <!-- Stats -->
+        <!-- Create Staff Card -->
 
-        <section class="stats-grid">
-          <div class="stat-card">
-            <i class="bi bi-people"></i>
+        <section class="staff-form-section">
+          <div class="staff-form-card">
+            <div class="form-card-header">
+  <% if (staffId) { %>
+    <h3>Edit Staff Account</h3>
 
-            <h3><%= stats.totalStaff %></h3>
+    <p>
+      Edit an existing staff member account. Updated login credentials will be sent automatically if the email address is changed.
+    </p>
+  <% } else { %>
+    <h3>Create Staff Account</h3>
 
-            <span>Total Staff</span>
-          </div>
+    <p>
+      Create a new staff member account. Login credentials will be sent automatically.
+    </p>
+  <% } %>
+</div>
 
-          <div class="stat-card">
-            <i class="bi bi-house-door"></i>
+            <form id="createStaffForm" enctype="multipart/form-data">
+              <input type="hidden" id="staffId" value="<%= staffId || '' %>" />
 
-            <h3><%= stats.totalResidents %></h3>
+              <div class="form-grid">
+                <!-- Name -->
 
-            <span>Total Residents</span>
-          </div>
+                <div class="form-group full-width">
+                  <label>Full Name *</label>
 
-          <div class="stat-card">
-            <i class="bi bi-trash"></i>
+                  <input
+                    type="text"
+                    name="name"
+                    id="name"
+                    placeholder="Enter full name"
+                  />
 
-            <h3><%= stats.deletedUsers %></h3>
+                  <small class="error-message"></small>
+                </div>
 
-            <span>Trash</span>
-          </div>
+                <!-- Email -->
 
-          <div class="stat-card">
-            <i class="bi bi-journal-text"></i>
+                <div class="form-group full-width">
+                  <label>Email Address *</label>
 
-            <h3><%= stats.auditLogs %></h3>
+                  <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    placeholder="Enter email address"
+                  />
 
-            <span>Audit Logs</span>
+                  <small class="error-message"></small>
+                </div>
+
+                <!-- Upload -->
+
+                <div class="form-group full-width">
+                  <label>Profile Image</label>
+
+                  <label class="upload-box">
+                    <input
+                      type="file"
+                      id="profileImage"
+                      name="profileImage"
+                      accept="image/*"
+                      hidden
+                    />
+
+                    <div class="upload-content">
+                      <i class="bi bi-cloud-arrow-up"></i>
+
+                      <span>Click to Upload Profile Image</span>
+
+                      <small>PNG, JPG, WEBP</small>
+                      <span class="image-preview" id="imagePreview"></span>
+                    </div>
+                  </label>
+
+                  <!-- <div class="image-preview" id="imagePreview"></div> -->
+                </div>
+              </div>
+
+              <!-- Buttons -->
+
+              <div class="form-actions">
+                <button type="button" class="reset-btn" id="resetFormBtn">
+                  Reset Form
+                </button>
+
+                <button type="submit" class="submit-btn">
+                  <%= staffId ? "Update Staff" : "Create Staff" %>
+                </button>
+              </div>
+            </form>
           </div>
         </section>
       </main>
@@ -197,6 +260,45 @@
       </div>
     </div>
 
+    <!-- Reset Form Modal -->
+
+    <div class="logout-modal" id="resetModal">
+      <div class="logout-modal-card">
+        <div class="logout-icon">
+          <i class="bi bi-arrow-counterclockwise"></i>
+        </div>
+
+        <h3>Reset Form</h3>
+
+        <p>
+          Are you sure you want to clear all entered information? This action
+          cannot be undone.
+        </p>
+
+        <div class="logout-actions">
+          <button type="button" class="cancel-btn" id="cancelReset">
+            Cancel
+          </button>
+
+          <button type="button" class="confirm-btn" id="confirmReset">
+            Yes, Reset
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div id="successToast" class="success-toast">
+      <i class="bi bi-check-circle-fill"></i>
+
+      <div>
+        <h5>Staff Created Successfully</h5>
+
+        <p>Login credentials have been sent to the registered email.</p>
+      </div>
+    </div>
+
     <script src="/js/admin.js"></script>
+
+    <script src="/js/manage-staff.js"></script>
   </body>
 </html>

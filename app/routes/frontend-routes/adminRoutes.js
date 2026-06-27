@@ -1,3 +1,9 @@
+/**
+ * ==========================================
+ * ADMIN FRONTEND ROUTES
+ * ==========================================
+ */
+
 const express = require("express");
 
 const router = express.Router();
@@ -28,45 +34,51 @@ router.get("/dashboard", adminFrontendController.dashboard);
 
 /**
  * ==========================================
- * STAFF
+ * STAFF MANAGEMENT
  * ==========================================
  */
 
-router.get("/staff", adminFrontendController.staff);
+// Create Staff
 
-router.get("/staff/create", adminFrontendController.createStaff);
+router.get("/staff/create", adminFrontendController.manageStaff);
 
-router.get("/staff/:id", adminFrontendController.viewStaff);
+// Edit Staff
 
-router.get("/staff/:id/edit", adminFrontendController.editStaff);
+router.get("/staff/manage/:id", adminFrontendController.manageStaff);
+
+// View Staff
+
+router.get("/staff/show", adminFrontendController.showStaff);
 
 /**
  * ==========================================
- * RESIDENTS
+ * RESIDENT MANAGEMENT
  * ==========================================
  */
 
-router.get("/residents", adminFrontendController.residents);
+// Edit Resident
 
-router.get("/residents/:id", adminFrontendController.viewResident);
+router.get("/resident/manage/:id", adminFrontendController.manageResident);
+
+// View Residents
+
+router.get("/resident/show", adminFrontendController.showResident);
 
 /**
  * ==========================================
- * MAINTENANCE
+ * ACCOUNT TRASH
  * ==========================================
  */
 
-router.get("/maintenance", adminFrontendController.maintenance);
-
-router.get("/maintenance/:id", adminFrontendController.maintenanceView);
+router.get("/account-trash", adminFrontendController.accountTrash);
 
 /**
  * ==========================================
- * TRASH
+ * ADMIN PROFILE
  * ==========================================
  */
 
-router.get("/trash", adminFrontendController.trash);
+router.get("/profile", adminFrontendController.profile);
 
 /**
  * ==========================================

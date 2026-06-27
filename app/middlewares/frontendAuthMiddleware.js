@@ -21,9 +21,11 @@ const frontendAuthMiddleware = async (req, res, next) => {
     const user = await User.findById(decoded.id).select("-password");
 
     if (!user || user.isDeleted) {
+      res.clearCookie("accessToken");
+      res.clearCookie("refreshToken");
+
       return res.redirect("/auth/login");
     }
-
     req.user = user;
 
     next();

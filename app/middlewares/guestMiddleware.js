@@ -20,10 +20,9 @@ const guestMiddleware = async (req, res, next) => {
 
     const user = await User.findById(decoded.id);
 
-    if (!user) {
+    if (!user || user.isDeleted) {
       return next();
     }
-
     switch (user.role) {
       case "ADMIN":
         return res.redirect("/admin/dashboard");

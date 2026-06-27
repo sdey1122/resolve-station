@@ -26,23 +26,4 @@ router.use(roleMiddleware("STAFF"));
 
 router.get("/dashboard", staffFrontendController.dashboard);
 
-router.get("/performance", staffFrontendController.performance);
-
-/**
- * ==========================================
- * ASSIGNED JOBS
- * ==========================================
- */
-
-router.get("/assigned-jobs", staffFrontendController.assignedJobs);
-/**
- * ==========================================
- * PERFORMANCE
- * ==========================================
- */
-
-router.get("/performance", staffFrontendController.performance);
-
-router.get("/jobs/:id", staffFrontendController.viewJob);
-
 module.exports = router;

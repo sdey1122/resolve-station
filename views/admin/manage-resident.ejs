@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Manage Resident | ResolveStation</title>
+
+    <!-- Bootstrap -->
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Bootstrap Icons -->
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+    />
+
+    <!-- Dashboard CSS -->
+
+    <link rel="stylesheet" href="/css/admin.css" />
+  </head>
+
+  <body>
+    <!-- Overlay -->
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <div class="dashboard-wrapper">
+      <!-- Sidebar -->
+
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+          <img src="/images/logo/resolvestationlogo.png" alt="ResolveStation" />
+        </div>
+
+        <nav class="sidebar-nav">
+          <a href="/admin/dashboard" class="nav-link">
+            <i class="bi bi-grid"></i>
+
+            <span class="nav-text"> Dashboard </span>
+          </a>
+
+          <!-- Staff -->
+
+          <div class="nav-title">Staff Management</div>
+
+          <a href="/admin/staff/show" class="nav-link">
+            <i class="bi bi-people"></i>
+
+            <span class="nav-text"> View Staff </span>
+          </a>
+
+          <a href="/admin/staff/create" class="nav-link">
+            <i class="bi bi-person-plus"></i>
+
+            <span class="nav-text"> Manage Staff </span>
+          </a>
+
+          <div class="nav-divider"></div>
+
+          <!-- Resident -->
+
+          <div class="nav-title">Resident Management</div>
+
+          <a href="/admin/resident/show" class="nav-link">
+            <i class="bi bi-house-door"></i>
+
+            <span class="nav-text"> View Residents </span>
+          </a>
+
+          <!-- System -->
+
+          <div class="nav-title">System</div>
+
+          <a href="/admin/account-trash" class="nav-link">
+            <i class="bi bi-trash"></i>
+
+            <span class="nav-text"> Account Trash </span>
+          </a>
+
+          <a href="/admin/audit-logs" class="nav-link">
+            <i class="bi bi-journal-text"></i>
+
+            <span class="nav-text"> Audit Logs </span>
+          </a>
+        </nav>
+
+        <button class="logout-btn" id="logoutBtn">
+          <i class="bi bi-box-arrow-right"></i>
+
+          <span class="logout-text"> Logout </span>
+        </button>
+      </aside>
+
+      <!-- Main -->
+
+      <main class="main-content" id="mainContent">
+        <!-- Header -->
+
+        <header class="dashboard-header">
+          <div class="header-left">
+            <button class="menu-toggle" id="menuToggle">
+              <i class="bi bi-list"></i>
+            </button>
+
+            <div class="welcome-section">
+              <h1>Welcome, <%= user.name %></h1>
+
+              <p>Administrator • <%= user.email %></p>
+            </div>
+          </div>
+
+          <div class="header-right">
+            <button class="notification-btn">
+              <i class="bi bi-bell"></i>
+            </button>
+
+            <a
+  href="/admin/profile"
+  class="profile-box"
+  title="My Profile"
+>
+  <img
+    src="<%= user.profileImage?.url %>"
+    alt="<%= user.name %>"
+  />
+</a>
+        </header>
+
+        <!-- Hero -->
+
+        <section class="hero-banner">
+          <div>
+            <h2>Resident Management Dashboard</h2>
+
+            <p>
+              Review resident profiles, update account information and maintain
+              resident records across ResolveStation.
+            </p>
+          </div>
+        </section>
+
+        <!-- Card -->
+
+        <section class="staff-form-section">
+          <div class="staff-form-card">
+            <div class="form-card-header">
+              <h3>Edit Resident Account</h3>
+
+              <p>
+                Update resident information, email address and profile image.
+                Residents manage their own registration and passwords.
+              </p>
+            </div>
+
+            <form id="updateResidentForm" enctype="multipart/form-data">
+              <input
+                type="hidden"
+                id="residentId"
+                value="<%= residentId || '' %>"
+              />
+
+              <div class="form-grid">
+                <!-- Full Name -->
+
+                <div class="form-group full-width">
+                  <label> Full Name * </label>
+
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    placeholder="Enter resident name"
+                  />
+
+                  <small class="error-message"></small>
+                </div>
+
+                <!-- Email -->
+
+                <div class="form-group full-width">
+                  <label> Email Address * </label>
+
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Enter resident email"
+                  />
+
+                  <small class="error-message"></small>
+                </div>
+
+                <!-- Image -->
+                <!-- Image -->
+
+                <div class="form-group full-width">
+                  <label> Profile Image </label>
+
+                  <label class="upload-box">
+                    <input
+                      type="file"
+                      id="profileImage"
+                      name="profileImage"
+                      accept="image/*"
+                      hidden
+                    />
+
+                    <div class="upload-content">
+                      <i class="bi bi-cloud-arrow-up"></i>
+
+                      <span> Click to Upload Profile Image </span>
+
+                      <small> PNG, JPG, JPEG, WEBP </small>
+
+                      <span class="image-preview" id="imagePreview"> </span>
+                    </div>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Buttons -->
+
+              <div class="form-actions">
+                <button type="button" class="reset-btn" id="resetFormBtn">
+                  Reset Form
+                </button>
+
+                <button type="submit" class="submit-btn">
+                  Update Resident
+                </button>
+              </div>
+            </form>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- Logout Modal -->
+
+    <div class="logout-modal" id="logoutModal">
+      <div class="logout-modal-card">
+        <div class="logout-icon">
+          <i class="bi bi-box-arrow-right"></i>
+        </div>
+
+        <h3>Logout Confirmation</h3>
+
+        <p>
+          Are you sure you want to logout from ResolveStation? You will need to
+          sign in again to access your dashboard.
+        </p>
+
+        <div class="logout-actions">
+          <button class="cancel-btn" id="cancelLogout">Cancel</button>
+
+          <button class="confirm-btn" id="confirmLogout">Yes, Logout</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Reset Modal -->
+
+    <div class="logout-modal" id="resetModal">
+      <div class="logout-modal-card">
+        <div class="logout-icon">
+          <i class="bi bi-arrow-counterclockwise"></i>
+        </div>
+
+        <h3>Reset Changes</h3>
+
+        <p>
+          Are you sure you want to discard all unsaved modifications made to
+          this resident account?
+        </p>
+
+        <div class="logout-actions">
+          <button type="button" class="cancel-btn" id="cancelReset">
+            Cancel
+          </button>
+
+          <button type="button" class="confirm-btn" id="confirmReset">
+            Yes, Reset
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Success Toast -->
+
+    <div id="successToast" class="success-toast">
+      <i class="bi bi-check-circle-fill"></i>
+
+      <div>
+        <h5>Resident Updated Successfully</h5>
+
+        <p>Resident information has been updated successfully.</p>
+      </div>
+    </div>
+    <!-- JavaScript -->
+
+    <script src="/js/admin.js"></script>
+
+    <script src="/js/manage-resident.js"></script>
+  </body>
+</html>

@@ -26,20 +26,4 @@ router.use(roleMiddleware("RESIDENT"));
 
 router.get("/dashboard", residentFrontendController.dashboard);
 
-/**
- * ==========================================
- * COMPLAINTS
- * ==========================================
- */
-
-router.get("/complaints", residentFrontendController.complaints);
-
-/**
- * ==========================================
- * MAINTENANCE
- * ==========================================
- */
-
-router.get("/maintenance", residentFrontendController.maintenance);
-
 module.exports = router;

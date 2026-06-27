@@ -417,6 +417,21 @@ if (loginForm) {
 
   const passwordInput = document.getElementById("password");
 
+  const rememberMeInput = document.getElementById("rememberMe");
+
+  /**
+   * ==========================================
+   * REMEMBER EMAIL
+   * ==========================================
+   */
+
+  const savedEmail = localStorage.getItem("rememberEmail");
+
+  if (savedEmail) {
+    emailInput.value = savedEmail;
+    rememberMeInput.checked = true;
+  }
+
   function clearErrors() {
     setError("emailError", "");
 
@@ -546,6 +561,18 @@ if (loginForm) {
         showToast(data.message || "Login failed.", "error");
 
         return;
+      }
+
+      /**
+       * ==========================================
+       * REMEMBER EMAIL
+       * ==========================================
+       */
+
+      if (rememberMeInput.checked) {
+        localStorage.setItem("rememberEmail", email);
+      } else {
+        localStorage.removeItem("rememberEmail");
       }
 
       /**

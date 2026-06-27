@@ -96,7 +96,7 @@ app.use(
     origin:
       process.env.NODE_ENV === "production"
         ? ["https://yourdomain.com"]
-        : ["http://localhost:5131", "http://localhost:3000"],
+        : ["http://localhost:5132", "http://localhost:3007"],
 
     credentials: true,
   }),
@@ -229,7 +229,7 @@ app.use(errorMiddleware);
  * ==========================================
  */
 
-const PORT = process.env.PORT || 5131;
+const PORT = process.env.PORT || 5132;
 
 app.listen(PORT, () => {
   console.log(`ResolveStation running at http://localhost:${PORT}`);

@@ -16,7 +16,10 @@ const {
   hashToken,
 } = require("../utils/generateToken");
 
-const { uploadProfileImage } = require("./cloudinaryService");
+const {
+  uploadProfileImage,
+  deleteProfileImage,
+} = require("./cloudinaryService");
 
 const {
   sendVerificationEmail,
@@ -94,36 +97,6 @@ class AuthService {
    * VERIFY EMAIL
    * ==========================================
    */
-
-  // async verifyEmail(token) {
-  //   const hashedToken = hashToken(token);
-
-  //   const user = await User.findOne({
-  //     verificationToken: hashedToken,
-
-  //     verificationTokenExpires: {
-  //       $gt: Date.now(),
-  //     },
-  //   });
-
-  //   if (!user) {
-  //     throw new Error("Invalid or expired verification link.");
-  //   }
-
-  //   user.isVerified = true;
-
-  //   user.verificationToken = null;
-
-  //   user.verificationTokenExpires = null;
-
-  //   await user.save();
-
-  //   return {
-  //     success: true,
-
-  //     message: "Email verification completed successfully.",
-  //   };
-  // }
 
   async verifyEmail(token) {
     const hashedToken = hashToken(token);

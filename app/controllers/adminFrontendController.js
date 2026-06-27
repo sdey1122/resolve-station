@@ -1,165 +1,121 @@
 /**
  * ==========================================
- * Admin Frontend Controller
+ * ADMIN FRONTEND CONTROLLER
  * ==========================================
  */
+
+const User = require("../models/User");
+
+const AuditLog = require("../models/AuditLog");
 
 class AdminFrontendController {
   /**
    * ==========================================
-   * DASHBOARD
+   * ADMIN DASHBOARD
    * ==========================================
    */
 
-  dashboard(req, res) {
-    return res.render("admin/dashboard", {
+  async dashboard(req, res) {
+    try {
+      const totalStaff = await User.countDocuments({
+        role: "STAFF",
+        isDeleted: false,
+      });
+
+      const totalResidents = await User.countDocuments({
+        role: "RESIDENT",
+        isDeleted: false,
+      });
+
+      const deletedUsers = await User.countDocuments({
+        isDeleted: true,
+      });
+
+      const auditLogs = await AuditLog.countDocuments();
+
+      return res.render("admin/dashboard", {
+        user: req.user,
+
+        stats: {
+          totalStaff,
+          totalResidents,
+          deletedUsers,
+          auditLogs,
+        },
+      });
+    } catch (error) {
+      console.error(error);
+
+      return res.status(500).send("Internal Server Error");
+    }
+  }
+
+  /**
+   * ==========================================
+   * STAFF PAGES
+   * ==========================================
+   */
+
+  manageStaff(req, res) {
+    return res.render("admin/manage-staff", {
       user: req.user,
 
-      stats: {},
+      staffId: req.params.id || null,
+    });
+  }
 
-      recentActivities: [],
+  showStaff(req, res) {
+    return res.render("admin/show-staff", {
+      user: req.user,
+    });
+  }
+  /**
+   * ==========================================
+   * RESIDENT PAGES
+   * ==========================================
+   */
+
+  manageResident(req, res) {
+    return res.render("admin/manage-resident", {
+      user: req.user,
+
+      residentId: req.params.id || null,
+    });
+  }
+
+  showResident(req, res) {
+    return res.render("admin/show-resident", {
+      user: req.user,
     });
   }
 
   /**
    * ==========================================
-   * STAFF LIST
+   * ACCOUNT TRASH
    * ==========================================
    */
 
-  staff(req, res) {
-    return res.render("admin/staff", {
-      user: req.user,
+  async accountTrash(req, res) {
+    try {
+      return res.render("admin/account-trash", {
+        user: req.user,
+      });
+    } catch (error) {
+      console.error(error);
 
-      staff: [],
-
-      activeStaff: 0,
-
-      deletedStaff: 0,
-
-      newStaff: 0,
-    });
+      return res.status(500).send("Internal Server Error");
+    }
   }
 
   /**
    * ==========================================
-   * CREATE STAFF
+   * ADMIN PROFILE
    * ==========================================
    */
 
-  createStaff(req, res) {
-    return res.render("admin/staff-create", {
+  profile(req, res) {
+    return res.render("admin/profile", {
       user: req.user,
-    });
-  }
-
-  /**
-   * ==========================================
-   * VIEW STAFF
-   * ==========================================
-   */
-
-  viewStaff(req, res) {
-    return res.render("admin/staff-view", {
-      user: req.user,
-
-      staff: {},
-    });
-  }
-
-  /**
-   * ==========================================
-   * EDIT STAFF
-   * ==========================================
-   */
-
-  editStaff(req, res) {
-    return res.render("admin/staff-edit", {
-      user: req.user,
-
-      staff: {},
-    });
-  }
-
-  /**
-   * ==========================================
-   * RESIDENTS
-   * ==========================================
-   */
-
-  residents(req, res) {
-    return res.render("admin/residents", {
-      user: req.user,
-
-      residents: [],
-    });
-  }
-
-  /**
-   * ==========================================
-   * VIEW RESIDENT
-   * ==========================================
-   */
-
-  viewResident(req, res) {
-    return res.render("admin/resident-view", {
-      user: req.user,
-
-      resident: {},
-
-      requests: [],
-
-      stats: {},
-    });
-  }
-
-  /**
-   * ==========================================
-   * MAINTENANCE
-   * ==========================================
-   */
-
-  maintenance(req, res) {
-    return res.render("admin/maintenance", {
-      user: req.user,
-
-      requests: [],
-
-      stats: {},
-    });
-  }
-
-  /**
-   * ==========================================
-   * VIEW MAINTENANCE
-   * ==========================================
-   */
-
-  maintenanceView(req, res) {
-    return res.render("admin/maintenance-view", {
-      user: req.user,
-
-      request: {},
-
-      staffs: [],
-
-      timeline: [],
-    });
-  }
-
-  /**
-   * ==========================================
-   * TRASH
-   * ==========================================
-   */
-
-  trash(req, res) {
-    return res.render("admin/trash", {
-      user: req.user,
-
-      trashItems: [],
-
-      trashStats: {},
     });
   }
 
@@ -172,10 +128,6 @@ class AdminFrontendController {
   auditLogs(req, res) {
     return res.render("admin/audit-logs", {
       user: req.user,
-
-      logs: [],
-
-      stats: {},
     });
   }
 }

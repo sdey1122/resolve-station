@@ -1,27 +1,16 @@
 const express = require("express");
-
+const guestMiddleware = require("../../middlewares/guestMiddleware");
 const router = express.Router();
 
-/**
- * Home Page Route
- *
- * Renders the public landing page.
- */
-router.get("/", (req, res) => {
+router.get("/", guestMiddleware, (req, res) => {
   res.render("public/home");
 });
 
-/**
- * About Page Route
- */
-router.get("/about", (req, res) => {
+router.get("/about", guestMiddleware, (req, res) => {
   res.render("public/about");
 });
 
-/**
- * Contact Page Route
- */
-router.get("/contact", (req, res) => {
+router.get("/contact", guestMiddleware, (req, res) => {
   res.render("public/contact");
 });
 
