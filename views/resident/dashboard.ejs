@@ -1,61 +1,1091 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
 
-    <title>Resident Dashboard | ResolveStation</title>
+    <meta charset="UTF-8">
 
-    <link rel="stylesheet" href="/css/dashboard.css" />
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+
+        Resident Dashboard | ResolveStation
+
+    </title>
+
+    <!-- Resident CSS -->
 
     <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
-    />
-  </head>
+        rel="stylesheet"
+        href="/css/resident.css"
+    >
 
-  <body>
-    <div class="dashboard-container">
-      <%- include("../partials/resident-sidebar") %>
+    <!-- Bootstrap Icons -->
 
-      <main class="dashboard-main">
-        <%- include("../partials/dashboard-header") %>
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    >
 
-        <section class="dashboard-title">
-          <h1>Welcome Back, <%= user.name %></h1>
+</head>
 
-          <p>Track complaints and maintenance requests.</p>
-        </section>
+<body>
 
-        <section class="stats-grid">
-          <div class="stat-card blue">
-            <h4>Total Complaints</h4>
+    <!-- ==========================================
+         SIDEBAR OVERLAY (Copied from Admin)
+    ========================================== -->
 
-            <h2><%= stats?.totalComplaints || 0 %></h2>
-          </div>
+    <div
+        class="sidebar-overlay"
+        id="sidebarOverlay"
+    ></div>
 
-          <div class="stat-card orange">
-            <h4>Pending Requests</h4>
+    <!-- ==========================================
+         DASHBOARD WRAPPER
+    ========================================== -->
 
-            <h2><%= stats?.pending || 0 %></h2>
-          </div>
+    <div class="dashboard-wrapper">
 
-          <div class="stat-card green">
-            <h4>Completed Requests</h4>
+        <!-- ==========================================
+             SIDEBAR
+        ========================================== -->
 
-            <h2><%= stats?.completed || 0 %></h2>
-          </div>
+        <aside
+            class="sidebar"
+            id="sidebar"
+        >
 
-          <div class="stat-card purple">
-            <h4>Notifications</h4>
+            <!-- ======================================
+                 LOGO
+            ======================================= -->
 
-            <h2><%= stats?.notifications || 0 %></h2>
-          </div>
-        </section>
-      </main>
+            <div class="sidebar-logo">
+
+                <a href="/resident/dashboard">
+
+                    <img
+                        src="/images/logo/resolvestationlogo.svg"
+                        alt="ResolveStation"
+                    >
+
+                </a>
+
+            </div>
+
+            <!-- ======================================
+                 MENU
+            ======================================= -->
+
+            <nav class="sidebar-menu">
+
+                <a
+                    href="/resident/dashboard"
+                    class="sidebar-link active"
+                >
+
+                    <i class="bi bi-grid-fill"></i>
+
+                    <span>
+
+                        Dashboard
+
+                    </span>
+
+                </a>
+
+                <a
+                    href="/resident/create-complaint"
+                    class="sidebar-link"
+                >
+
+                    <i class="bi bi-plus-circle-fill"></i>
+
+                    <span>
+
+                        Create Complaint
+
+                    </span>
+
+                </a>
+
+                <a
+                    href="/resident/manage-complaints"
+                    class="sidebar-link"
+                >
+
+                    <i class="bi bi-card-checklist"></i>
+
+                    <span>
+
+                        Manage Complaints
+
+                    </span>
+
+                </a>
+
+                <a
+                    href="/resident/complaint-trash"
+                    class="sidebar-link"
+                >
+
+                    <i class="bi bi-trash3-fill"></i>
+
+                    <span>
+
+                        Complaint Trash
+
+                    </span>
+
+                </a>
+
+                <a
+                    href="/resident/profile"
+                    class="sidebar-link"
+                >
+
+                    <i class="bi bi-person-circle"></i>
+
+                    <span>
+
+                        My Profile
+
+                    </span>
+
+                </a>
+
+            </nav>
+
+            <!-- ======================================
+                 SIDEBAR FOOTER
+            ======================================= -->
+
+            <div class="sidebar-footer">
+
+                <button
+                    class="sidebar-link logout-btn"
+                    id="logoutBtn"
+                    type="button"
+                >
+
+                    <i class="bi bi-box-arrow-right"></i>
+
+                    <span>
+
+                        Logout
+
+                    </span>
+
+                </button>
+
+            </div>
+
+        </aside>
+
+        <!-- ==========================================
+             MAIN CONTENT
+        ========================================== -->
+
+        <main
+            class="main-content"
+            id="mainContent"
+        >
+
+                    <!-- ==========================================
+                 HEADER
+            ========================================== -->
+
+            <header class="dashboard-header">
+
+                <!-- Left -->
+
+                <div class="header-left">
+
+                    <button
+                        class="menu-toggle"
+                        id="menuToggle"
+                        type="button"
+                        aria-label="Toggle Sidebar"
+                    >
+
+                        <i class="bi bi-list"></i>
+
+                    </button>
+
+                    <div class="header-title">
+
+                        <h1>
+
+                            Welcome Back,
+
+                            <span>
+
+                                <%= user.name %>
+
+                            </span>
+
+                        </h1>
+
+                        <p>
+
+                            <i class="bi bi-envelope-fill"></i>
+
+                            <%= user.email %>
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <!-- Right -->
+
+                <div class="header-right">
+
+                    <!-- Notification -->
+
+                    <button
+                        type="button"
+                        class="notification-btn"
+                        aria-label="Notifications"
+                    >
+
+                        <i class="bi bi-bell-fill"></i>
+
+                        <span class="notification-dot"></span>
+
+                    </button>
+
+                    <!-- Profile -->
+
+                    <a
+                        href="/resident/profile"
+                        class="header-profile"
+                    >
+
+                        <img
+                            src="<%= user.profileImage?.url || '/images/default-avatar.png' %>"
+                            alt="<%= user.name %>"
+                        >
+
+                    </a>
+
+                </div>
+
+            </header>
+
+            <!-- ==========================================
+                 DASHBOARD CONTENT
+            ========================================== -->
+
+            <section class="dashboard-content">
+
+                              <!-- ==========================================
+                     HERO SECTION
+                ========================================== -->
+
+                <section class="resident-hero">
+
+                    <!-- Left -->
+
+                    <div class="hero-content">
+
+                        <span class="hero-badge">
+
+                            <i class="bi bi-stars"></i>
+
+                            Resident Dashboard
+
+                        </span>
+
+                        <h2>
+
+                            Every Complaint Matters.
+
+                        </h2>
+
+                        <p>
+
+                            Report community issues, monitor every complaint,
+                            track assigned staff, and stay updated throughout
+                            the entire resolution process from one place.
+
+                        </p>
+
+                        <div class="hero-actions">
+
+                            <a
+                                href="/resident/create-complaint"
+                                class="hero-btn hero-primary"
+                            >
+
+                                <i class="bi bi-plus-circle-fill"></i>
+
+                                Create Complaint
+
+                            </a>
+
+                            <a
+                                href="/resident/manage-complaints"
+                                class="hero-btn hero-outline"
+                            >
+
+                                <i class="bi bi-card-checklist"></i>
+
+                                Manage Complaints
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Right -->
+
+                    <div class="hero-image">
+
+                        <img
+                            src="/images//logo/resolvestationlogo.svg"
+                            alt="Resident Dashboard"
+                        >
+
+                    </div>
+
+                </section>
+
+                <!-- ==========================================
+                     DASHBOARD STATISTICS
+                ========================================== -->
+
+                <section class="dashboard-stats">
+
+                    <!-- Total -->
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon total">
+
+                            <i class="bi bi-card-list"></i>
+
+                        </div>
+
+                        <div class="stat-info">
+
+                            <span>
+
+                                Total Complaints
+
+                            </span>
+
+                            <h3>
+
+                                <%= stats.totalComplaints %>
+
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Pending -->
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon pending">
+
+                            <i class="bi bi-hourglass-split"></i>
+
+                        </div>
+
+                        <div class="stat-info">
+
+                            <span>
+
+                                Pending
+
+                            </span>
+
+                            <h3>
+
+                                <%= stats.pendingComplaints %>
+
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Assigned -->
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon assigned">
+
+                            <i class="bi bi-person-workspace"></i>
+
+                        </div>
+
+                        <div class="stat-info">
+
+                            <span>
+
+                                Assigned
+
+                            </span>
+
+                            <h3>
+
+                                <%= stats.assignedComplaints %>
+
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Completed -->
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon completed">
+
+                            <i class="bi bi-check-circle-fill"></i>
+
+                        </div>
+
+                        <div class="stat-info">
+
+                            <span>
+
+                                Completed
+
+                            </span>
+
+                            <h3>
+
+                                <%= stats.completedComplaints %>
+
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+                                <!-- ==========================================
+                     RECENT COMPLAINTS
+                ========================================== -->
+
+                <section class="complaint-section">
+
+                    <!-- Section Header -->
+
+                    <div class="section-header">
+
+                        <div>
+
+                            <span class="section-badge">
+
+                                Recent Activity
+
+                            </span>
+
+                            <h2>
+
+                                Recent Complaints
+
+                            </h2>
+
+                            <p>
+
+                                Track every complaint submitted recently and
+                                monitor its latest status.
+
+                            </p>
+
+                        </div>
+
+                        <a
+                            href="/resident/manage-complaints"
+                            class="view-all-btn"
+                        >
+
+                            View All
+
+                            <i class="bi bi-arrow-right"></i>
+
+                        </a>
+
+                    </div>
+
+                    <!-- ======================================
+                         COMPLAINT GRID
+                    ======================================= -->
+
+                    <div class="complaint-grid">
+
+                        <% if (!complaints || complaints.length === 0) { %>
+
+                        <!-- ==================================
+                             EMPTY STATE
+                        =================================== -->
+
+                        <div class="empty-complaints">
+
+                            <img
+                                src="/images/empty-complaints.svg"
+                                alt="No Complaints"
+                            >
+
+                            <h3>
+
+                                No Complaints Yet
+
+                            </h3>
+
+                            <p>
+
+                                You haven't submitted any complaints yet.
+                                Click below to create your first complaint.
+
+                            </p>
+
+                            <a
+                                href="/resident/create-complaint"
+                                class="hero-btn hero-primary"
+                            >
+
+                                <i class="bi bi-plus-circle-fill"></i>
+
+                                Create Complaint
+
+                            </a>
+
+                        </div>
+
+                        <% } else { %>
+
+                       <% complaints.forEach((complaint) => { %>
+
+<!-- ==================================
+     COMPLAINT CARD
+=================================== -->
+
+<article class="complaint-card">
+
+    <!-- ==================================
+         IMAGE
+    =================================== -->
+
+    <div class="complaint-image">
+
+        <img
+            src="<%= complaint.image?.url || '/images/default-complaint.jpg' %>"
+            alt="<%= complaint.title %>"
+        >
+
+        <div
+            class="image-overlay image-<%= (complaint.status || 'submitted').toLowerCase() %>"
+        ></div>
+
+        <!-- STATUS -->
+
+        <span
+            class="status-badge status-<%= (complaint.status || 'submitted').toLowerCase() %>"
+        >
+
+            <%= (complaint.status || "SUBMITTED").replaceAll("_", " ") %>
+
+        </span>
+
+        <!-- PRIORITY -->
+
+        <% if (
+            complaint.status === "SUBMITTED" ||
+            complaint.status === "RESUBMITTED"
+        ) { %>
+
+            <span class="priority-badge priority-pending">
+
+                Pending Review
+
+            </span>
+
+        <% } else { %>
+
+            <span
+                <%= complaint.priority
+      ? complaint.priority.replaceAll("_"," ")
+      : "Pending Review" %>
+            >
+
+                <%= (complaint.priority || "PENDING").toLowerCase() %>
+
+            </span>
+
+        <% } %>
+
     </div>
 
-    <script src="/js/dashboard.js"></script>
-  </body>
+    <!-- ==================================
+         CARD BODY
+    =================================== -->
+
+    <div class="complaint-body">
+
+        <div class="complaint-top">
+
+            <span class="complaint-number">
+
+                #<%= complaint.complaintNumber %>
+
+            </span>
+
+            <span class="complaint-category">
+
+                <%= complaint.category %>
+
+            </span>
+
+        </div>
+
+        <h3>
+
+            <%= complaint.title %>
+
+        </h3>
+
+        <p class="complaint-description">
+
+            <%= complaint.description &&
+                complaint.description.length > 120
+                ? complaint.description.substring(0,120) + "..."
+                : complaint.description %>
+
+        </p>
+
+        <!-- ==================================
+             CURRENT STATUS
+        =================================== -->
+
+        <div class="complaint-current-status">
+
+    <strong>
+
+        Current Status
+
+    </strong>
+
+    <p>
+
+        <% if (complaint.status === "SUBMITTED") { %>
+
+            Waiting for administrator approval.
+
+        <% } else if (complaint.status === "RESUBMITTED") { %>
+
+            Complaint resubmitted. Waiting for administrator approval.
+
+        <% } else if (complaint.status === "APPROVED") { %>
+
+            Complaint approved. Waiting for staff assignment.
+
+        <% } else if (complaint.status === "ASSIGNED") { %>
+
+            Assigned to
+            <strong>
+                <%= complaint.assignedStaff
+                    ? complaint.assignedStaff.name
+                    : "a staff member" %>
+            </strong>.
+
+        <% } else if (complaint.status === "IN_PROGRESS") { %>
+
+            Your complaint is currently being resolved.
+
+        <% } else if (complaint.status === "COMPLETED") { %>
+
+            Work completed. Waiting for administrator verification.
+
+        <% } else if (complaint.status === "CLOSED") { %>
+
+            Your complaint has been successfully resolved and closed.
+
+        <% } else if (complaint.status === "REJECTED") { %>
+
+            Complaint rejected.
+
+            <% if (complaint.adminRemark) { %>
+
+                <br><br>
+
+                <strong>Reason:</strong>
+
+                <%= complaint.adminRemark %>
+
+            <% } else { %>
+
+                <br><br>
+
+                Please review the administrator's remarks and submit it again.
+
+            <% } %>
+
+        <% } else if (complaint.status === "CANNOT_COMPLETE") { %>
+
+            Staff reported that this complaint cannot be completed.
+
+        <% } else { %>
+
+            Waiting for administrator approval.
+
+        <% } %>
+
+    </p>
+
+        </div>
+
+                                                                <!-- ==================================
+                                     COUNTDOWN
+                                =================================== -->
+
+                                <div
+                                    class="countdown-box"
+                                    data-deadlineAt="<%= complaint.deadlineAt || '' %>"
+                                >
+
+                                    <i class="bi bi-clock-history"></i>
+
+                                    <span class="countdown-text">
+
+                                        <%= complaint.deadlineAt
+                                            ? "Calculating..."
+                                            : "deadlineAt Not Assigned" %>
+
+                                    </span>
+
+                                </div>
+
+                                <!-- ==================================
+                                     META INFORMATION
+                                =================================== -->
+
+                                <div class="complaint-meta">
+
+                                    <div class="meta-item">
+
+                                        <i class="bi bi-calendar-event"></i>
+
+                                        <span>
+
+                                            <%= complaint.incidentDate
+                                                ? complaint.incidentDate.toLocaleDateString("en-IN")
+                                                : "-" %>
+
+                                        </span>
+
+                                    </div>
+
+                                    <div class="meta-item">
+
+                                        <i class="bi bi-clock"></i>
+
+                                        <span>
+
+                                            <%= complaint.createdAt
+                                                ? complaint.createdAt.toLocaleTimeString("en-IN",{
+                                                    hour:"2-digit",
+                                                    minute:"2-digit"
+                                                })
+                                                : "-" %>
+
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                                <!-- ==================================
+                                     ASSIGNED STAFF
+                                =================================== -->
+
+                                <div class="assigned-staff">
+
+                                    <div class="staff-left">
+
+                                        <i class="bi bi-person-workspace"></i>
+
+                                        <div>
+
+                                            <small>
+
+                                                Assigned Staff
+
+                                            </small>
+
+                                            <strong>
+
+                                                <%= complaint.assignedStaff
+                                                    ? complaint.assignedStaff.name
+                                                    : "Not Assigned" %>
+
+                                            </strong>
+
+                                        </div>
+
+                                    </div>
+
+                                    <% if (complaint.assignedStaff?.profileImage?.url) { %>
+
+                                        <img
+                                            src="<%= complaint.assignedStaff.profileImage.url %>"
+                                            alt="Staff"
+                                            class="staff-avatar"
+                                        >
+
+                                    <% } else { %>
+
+                                        <div class="staff-avatar-placeholder">
+
+                                            <i class="bi bi-person-fill"></i>
+
+                                        </div>
+
+                                    <% } %>
+
+                                </div>
+
+                                <!-- ==================================
+                                     PRICE
+                                =================================== -->
+
+                                <div class="price-box">
+
+                                    <span>
+
+                                        Estimated Cost
+
+                                    </span>
+
+                                    <strong>
+
+                                        ₹
+                                        <%= complaint.estimatedPrice > 0
+    ? complaint.estimatedPrice.toLocaleString("en-IN")
+    : "Pending" %>
+
+                                    </strong>
+
+                                </div>
+
+                                <!-- ==================================
+                                     FOOTER
+                                =================================== -->
+
+                                <div class="complaint-footer">
+
+                                    <span class="complaint-id">
+
+                                        Complaint #
+
+                                        <%= complaint.complaintNumber %>
+
+                                    </span>
+
+                                    <span>
+
+                                        <%= complaint.createdAt
+                                            ? complaint.createdAt.toLocaleDateString("en-IN")
+                                            : "-" %>
+
+                                    </span>
+
+                                </div>
+
+                                <!-- ==================================
+                                     ACTIONS
+                                =================================== -->
+
+                                <div class="complaint-actions">
+
+                                    <a
+                                        href="/resident/manage-complaints/<%= complaint._id %>"
+                                        class="complaint-btn"
+                                    >
+
+                                        <i class="bi bi-eye-fill"></i>
+
+                                        View Details
+
+                                    </a>
+
+                                    <% if (complaint.status === "REJECTED") { %>
+
+                                        <a
+                                            href="/resident/edit-complaint/<%= complaint._id %>"
+                                            class="complaint-edit-btn"
+                                        >
+
+                                            <i class="bi bi-pencil-fill"></i>
+
+                                            Edit
+
+                                        </a>
+
+                                    <% } %>
+
+                                </div>
+
+                            </div>
+
+                        </article>
+
+                        <% }) %>
+
+                        <% } %>
+
+                    </div>
+
+                                    <!-- ==========================================
+                     PAGINATION
+                ========================================== -->
+
+                <% if (typeof pagination !== "undefined" && pagination.totalPages > 1) { %>
+
+                <div class="dashboard-pagination">
+
+                    <% if (pagination.hasPrevPage) { %>
+
+                        <a
+                            href="?page=<%= pagination.currentPage - 1 %>"
+                            class="pagination-btn"
+                        >
+
+                            <i class="bi bi-chevron-left"></i>
+
+                        </a>
+
+                    <% } %>
+
+                    <% for(let page = 1; page <= pagination.totalPages; page++){ %>
+
+                        <a
+                            href="?page=<%= page %>"
+                            class="pagination-btn <%= pagination.currentPage === page ? 'active' : '' %>"
+                        >
+
+                            <%= page %>
+
+                        </a>
+
+                    <% } %>
+
+                    <% if (pagination.hasNextPage) { %>
+
+                        <a
+                            href="?page=<%= pagination.currentPage + 1 %>"
+                            class="pagination-btn"
+                        >
+
+                            <i class="bi bi-chevron-right"></i>
+
+                        </a>
+
+                    <% } %>
+
+                </div>
+
+                <% } %>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <!-- ==========================================
+         LOGOUT MODAL (Same Architecture as Admin)
+    ========================================== -->
+
+    <div
+        class="logout-modal"
+        id="logoutModal"
+    >
+
+        <div class="logout-modal-card">
+
+            <div class="logout-icon">
+
+                <i class="bi bi-box-arrow-right"></i>
+
+            </div>
+
+            <h2>
+
+                Logout?
+
+            </h2>
+
+            <p>
+
+                Are you sure you want to logout from your
+                <strong>Resident Account</strong>?
+
+            </p>
+
+            <div class="logout-actions">
+
+                <button
+                    type="button"
+                    class="btn-cancel"
+                    id="cancelLogout"
+                >
+
+                    Cancel
+
+                </button>
+
+                <button
+                    type="button"
+                    class="btn-confirm"
+                    id="confirmLogout"
+                >
+
+                    Logout
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ==========================================
+         RESIDENT DATA
+    ========================================== -->
+
+    <script>
+
+        window.RESIDENT = {
+
+            id: "<%= user._id %>",
+
+            name: "<%= user.name %>",
+
+            email: "<%= user.email %>"
+
+        };
+
+    </script>
+
+    <!-- Resident JS -->
+
+    <script src="/js/resident.js"></script>
+
+</body>
+
 </html>

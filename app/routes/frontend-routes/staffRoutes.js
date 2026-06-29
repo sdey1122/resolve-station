@@ -24,6 +24,36 @@ router.use(roleMiddleware("STAFF"));
  * ==========================================
  */
 
+/**
+ * ==========================================
+ * DASHBOARD
+ * ==========================================
+ */
+
 router.get("/dashboard", staffFrontendController.dashboard);
+
+/**
+ * ==========================================
+ * TASKS
+ * ==========================================
+ */
+
+router.get("/tasks", staffFrontendController.tasks);
+
+/**
+ * ==========================================
+ * TASK DETAILS
+ * ==========================================
+ */
+
+router.get("/tasks/:id", staffFrontendController.taskDetails);
+
+/**
+ * ==========================================
+ * PROFILE
+ * ==========================================
+ */
+
+router.get("/profile", staffFrontendController.profile);
 
 module.exports = router;

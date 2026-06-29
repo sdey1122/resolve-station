@@ -25,6 +25,8 @@ const notFoundMiddleware = require("./app/middlewares/notFoundMiddleware");
 
 const errorMiddleware = require("./app/middlewares/errorMiddleware");
 
+const staffApiRoutes = require("./app/routes/backend-routes/staffApiRoutes");
+
 /**
  * ==========================================
  * API ROUTES
@@ -36,6 +38,8 @@ const authApiRoutes = require("./app/routes/backend-routes/authApiRoutes");
 const adminApiRoutes = require("./app/routes/backend-routes/adminApiRoutes");
 
 const profileApiRoutes = require("./app/routes/backend-routes/profileApiRoutes");
+
+const complaintApiRoutes = require("./app/routes/backend-routes/complaintApiRoutes");
 
 /**
  * ==========================================
@@ -188,6 +192,8 @@ app.use("/staff", staffRoutes);
 
 app.use("/resident", residentRoutes);
 
+app.use("/api/complaints", complaintApiRoutes);
+
 /**
  * ==========================================
  * API ROUTES
@@ -209,7 +215,7 @@ app.use("/api/profile", profileApiRoutes);
 |
 */
 
-// app.use("/api/staff", staffApiRoutes);
+app.use("/api/staff", staffApiRoutes);
 
 // app.use("/api/resident", residentApiRoutes);
 

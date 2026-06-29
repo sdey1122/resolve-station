@@ -34,6 +34,30 @@ router.get("/dashboard", adminFrontendController.dashboard);
 
 /**
  * ==========================================
+ * COMPLAINT MANAGEMENT
+ * ==========================================
+ */
+
+// Pending Complaints
+
+router.get("/complaints/pending", adminFrontendController.pendingComplaints);
+
+/**
+ * ==========================================
+ * REVIEW COMPLAINT
+ * ==========================================
+ */
+
+// All Complaints
+
+router.get("/complaints", adminFrontendController.allComplaints);
+
+// Complaint Details
+
+router.get("/complaints/:id", adminFrontendController.complaintDetails);
+
+/**
+ * ==========================================
  * STAFF MANAGEMENT
  * ==========================================
  */
@@ -63,6 +87,23 @@ router.get("/resident/manage/:id", adminFrontendController.manageResident);
 // View Residents
 
 router.get("/resident/show", adminFrontendController.showResident);
+
+/**
+ * ==========================================
+ * STAFF REVIEW
+ * ==========================================
+ */
+
+// Completed jobs waiting for approval
+
+router.get("/completed-reviews", adminFrontendController.completedReviews);
+
+// Staff reported unable to complete
+
+router.get(
+  "/cannot-complete-reviews",
+  adminFrontendController.cannotCompleteReviews,
+);
 
 /**
  * ==========================================

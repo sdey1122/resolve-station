@@ -12,33 +12,55 @@ const authMiddleware = require("../../middlewares/authMiddleware");
 
 const roleMiddleware = require("../../middlewares/roleMiddleware");
 
+const upload = require("../../middlewares/uploadMiddleware");
+
+const staffController = require("../../controllers/staffController");
+
 /**
  * ==========================================
- * STAFF DASHBOARD
+ * MIDDLEWARE
  * ==========================================
  */
 
-router.get(
-  "/dashboard",
-  authMiddleware,
-  roleMiddleware("ADMIN", "STAFF"),
-  (req, res) => {
-    return res.status(200).json({
-      success: true,
+const staffOnly = [authMiddleware, roleMiddleware("STAFF")];
 
-      message: "Welcome Staff Dashboard.",
+/**
+ * ==========================================
+ * DASHBOARD
+ * ==========================================
+ */
 
-      user: {
-        id: req.user._id,
+router.get("/dashboard", ...staffOnly, staffController.dashboard);
 
-        name: req.user.name,
+/**
+ * ==========================================
+ * COMPLETE COMPLAINT
+ * ==========================================
+ */
 
-        email: req.user.email,
-
-        role: req.user.role,
-      },
-    });
-  },
+router.patch(
+  "/complaints/:id/complete",
+  ...staffOnly,
+  upload.single("completionImage"),
+  staffController.completeComplaint,
 );
+
+/**
+ * ==========================================
+ * CANNOT COMPLETE
+ * ==========================================
+ */
+
+router.patch(
+  "/complaints/:id/cannot-complete",
+  ...staffOnly,
+  staffController.cannotCompleteComplaint,
+);
+
+/**
+ * ==========================================
+ * EXPORT
+ * ==========================================
+ */
 
 module.exports = router;

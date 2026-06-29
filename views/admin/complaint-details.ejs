@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Complaint Details | ResolveStation</title>
+
+    <!-- Bootstrap -->
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Bootstrap Icons -->
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+    />
+
+    <!-- Admin CSS -->
+
+    <link rel="stylesheet" href="/css/admin.css" />
+
+    <!-- Page CSS -->
+
+    <link rel="stylesheet" href="/css/complaint-details.css" />
+  </head>
+
+  <body>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <div class="dashboard-wrapper">
+      <!-- ==========================================
+         SIDEBAR
+    =========================================== -->
+
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+          <img src="/images/logo/resolvestationlogo.png" alt="ResolveStation" />
+        </div>
+
+        <nav class="sidebar-nav">
+          <a href="/admin/dashboard" class="nav-link">
+            <i class="bi bi-grid"></i>
+
+            <span class="nav-text"> Dashboard </span>
+          </a>
+
+          <div class="nav-title">Complaint Management</div>
+
+          <a href="/admin/complaints/pending" class="nav-link active">
+            <i class="bi bi-hourglass-split"></i>
+
+            <span class="nav-text"> Pending Complaints </span>
+          </a>
+
+          <div class="nav-divider"></div>
+
+          <div class="nav-title">Staff Management</div>
+
+          <a href="/admin/staff/show" class="nav-link">
+            <i class="bi bi-people"></i>
+
+            <span class="nav-text"> View Staff </span>
+          </a>
+
+          <a href="/admin/staff/create" class="nav-link">
+            <i class="bi bi-person-plus"></i>
+
+            <span class="nav-text"> Manage Staff </span>
+          </a>
+
+          <a href="/admin/completed-reviews" class="nav-link">
+    <i class="bi bi-patch-check-fill"></i>
+
+    <span>
+
+        Completed Reviews
+
+    </span>
+</a>
+
+<a href="/admin/cannot-complete-reviews" class="nav-link">
+    <i class="bi bi-exclamation-octagon-fill"></i>
+
+    <span>
+
+        Unable To Complete
+
+    </span>
+</a>
+
+          <div class="nav-divider"></div>
+
+          <div class="nav-title">Resident Management</div>
+
+          <a href="/admin/resident/show" class="nav-link">
+            <i class="bi bi-house"></i>
+
+            <span class="nav-text"> View Residents </span>
+          </a>
+
+          <div class="nav-divider"></div>
+
+          <div class="nav-title">System</div>
+
+          <a href="/admin/account-trash" class="nav-link">
+            <i class="bi bi-trash"></i>
+
+            <span class="nav-text"> Account Trash </span>
+          </a>
+
+          <a href="/admin/audit-logs" class="nav-link">
+            <i class="bi bi-journal-text"></i>
+
+            <span class="nav-text"> Audit Logs </span>
+          </a>
+        </nav>
+
+        <button class="logout-btn" id="logoutBtn">
+          <i class="bi bi-box-arrow-right"></i>
+
+          <span class="logout-text"> Logout </span>
+        </button>
+      </aside>
+
+      <!-- ==========================================
+         MAIN
+    =========================================== -->
+
+      <main class="main-content" id="mainContent">
+        <!-- Header -->
+
+        <header class="dashboard-header">
+          <div class="header-left">
+            <button class="menu-toggle" id="menuToggle">
+              <i class="bi bi-list"></i>
+            </button>
+
+            <div class="welcome-section">
+              <h1>Complaint Details</h1>
+
+              <p>Review and manage resident complaint.</p>
+            </div>
+          </div>
+
+          <div class="header-right">
+            <button class="notification-btn">
+              <i class="bi bi-bell"></i>
+            </button>
+
+            <a href="/admin/profile" class="profile-box">
+              <img src="<%= user.profileImage?.url %>" alt="<%= user.name %>" />
+            </a>
+          </div>
+        </header>
+<!-- ==========================================
+     HERO
+========================================== -->
+
+<section class="hero-banner complaint-hero">
+
+    <div class="hero-content">
+
+        <a
+            href="/admin/complaints/pending"
+            class="back-link"
+        >
+
+            <i class="bi bi-arrow-left"></i>
+
+            Back to Pending Complaints
+
+        </a>
+
+        <div class="complaint-heading">
+
+            <div>
+
+                <span class="hero-tag">
+
+                    Complaint Review
+
+                </span>
+
+                <h2>
+
+                    #<%= complaint.complaintNumber %>
+
+                </h2>
+
+                <p>
+
+                    Submitted on
+
+                    <strong>
+
+                        <%= new Date(
+                            complaint.createdAt
+                        ).toLocaleString("en-IN") %>
+
+                    </strong>
+
+                </p>
+
+            </div>
+
+            <div class="hero-badges">
+
+                <span
+                    class="status-badge status-<%= complaint.status.toLowerCase() %>"
+                >
+
+                    <%= complaint.status.replaceAll("_"," ") %>
+
+                </span>
+
+                <span class="c-prio"
+                    <%= complaint.priority
+      ? complaint.priority.replaceAll("_"," ")
+      : "Pending Review" %>
+                >
+
+                    <%= (complaint.priority || "PENDING").toLowerCase() %>
+
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ==========================================
+     OVERVIEW
+========================================== -->
+
+<section class="stats-grid">
+
+    <div class="stat-card">
+
+        <i class="bi bi-person-circle"></i>
+
+        <h3>
+
+            <%= complaint.resident?.name %>
+
+        </h3>
+
+        <span>
+
+            Resident
+
+        </span>
+
+    </div>
+
+    <div class="stat-card">
+
+        <i class="bi bi-tag"></i>
+
+        <h3>
+
+            <%= complaint.category %>
+
+        </h3>
+
+        <span>
+
+            Category
+
+        </span>
+
+    </div>
+
+    <div class="stat-card">
+
+        <i class="bi bi-calendar-event"></i>
+
+        <h3>
+
+            <%= new Date(
+                complaint.incidentDate
+            ).toLocaleDateString("en-IN") %>
+
+        </h3>
+
+        <span>
+
+            Incident Date
+
+        </span>
+
+    </div>
+
+    <div class="stat-card">
+
+        <i class="bi bi-clock-history"></i>
+
+        <h3>
+
+            <%= complaint.incidentTime || "N/A" %>
+
+        </h3>
+
+        <span>
+
+            Incident Time
+
+        </span>
+
+    </div>
+
+</section>
+
+<!-- ==========================================
+     DETAILS GRID
+========================================== -->
+
+<section class="details-grid">
+
+    <!-- ==========================================
+     LEFT COLUMN
+========================================== -->
+
+<div class="details-left">
+
+    <!-- ======================================
+         EVIDENCE
+    ======================================= -->
+
+    <section class="detail-card">
+
+        <div class="card-header">
+
+            <h3>
+
+                <i class="bi bi-image-fill"></i>
+
+                Evidence Image
+
+            </h3>
+
+        </div>
+
+        <% if (complaint.image?.url) { %>
+
+        <img
+            src="<%= complaint.image.url %>"
+            alt="<%= complaint.title %>"
+            class="complaint-image"
+        >
+
+        <% } else { %>
+
+        <div class="no-image">
+
+            <i class="bi bi-image"></i>
+
+            <p>
+
+                No image uploaded.
+
+            </p>
+
+        </div>
+
+        <% } %>
+
+    </section>
+
+    <!-- ======================================
+         DESCRIPTION
+    ======================================= -->
+
+    <section class="detail-card">
+
+        <div class="card-header">
+
+            <h3>
+
+                <i class="bi bi-file-earmark-text-fill"></i>
+
+                Complaint Description
+
+            </h3>
+
+        </div>
+
+        <p class="complaint-description">
+
+            <%= complaint.description %>
+
+        </p>
+
+    </section>
+
+</div>
+
+<!-- ==========================================
+     RIGHT COLUMN
+========================================== -->
+
+<div class="details-right">
+
+    <!-- ======================================
+         RESIDENT INFORMATION
+    ======================================= -->
+
+    <section class="detail-card">
+
+        <div class="card-header">
+
+            <h3>
+
+                <i class="bi bi-person-fill"></i>
+
+                Resident Information
+
+            </h3>
+
+        </div>
+
+        <div class="info-item">
+
+            <span>Name</span>
+
+            <strong>
+
+                <%= complaint.resident?.name %>
+
+            </strong>
+
+        </div>
+
+        <div class="info-item">
+
+            <span>Email</span>
+
+            <strong>
+
+                <%= complaint.resident?.email %>
+
+            </strong>
+
+        </div>
+
+    </section>
+
+    <!-- ======================================
+         COMPLAINT INFORMATION
+    ======================================= -->
+
+    <section class="detail-card">
+
+        <div class="card-header">
+
+            <h3>
+
+                <i class="bi bi-info-circle-fill"></i>
+
+                Complaint Information
+
+            </h3>
+
+        </div>
+
+        <div class="info-item">
+
+            <span>Complaint ID</span>
+
+            <strong>
+
+                <%= complaint.complaintNumber %>
+
+            </strong>
+
+        </div>
+
+        <div class="info-item">
+
+            <span>Category</span>
+
+            <strong>
+
+                <%= complaint.category %>
+
+            </strong>
+
+        </div>
+
+        <div class="info-item">
+
+            <span>Status</span>
+
+            <strong>
+
+                <%= complaint.status.replaceAll("_"," ") %>
+
+            </strong>
+
+        </div>
+
+        <div class="info-item">
+
+            <span>Priority</span>
+
+            <strong>
+
+                <%= (complaint.priority || "PENDING").toLowerCase() %>
+
+            </strong>
+
+        </div>
+
+        <div class="info-item">
+
+            <span>Submitted</span>
+
+            <strong>
+
+                <%= new Date(
+                    complaint.createdAt
+                ).toLocaleString("en-IN") %>
+
+            </strong>
+
+        </div>
+
+    </section>
+
+        <!-- ======================================
+         TIMELINE
+    ======================================= -->
+
+    <section class="detail-card">
+
+        <div class="card-header">
+
+            <h3>
+
+                <i class="bi bi-clock-history"></i>
+
+                Timeline
+
+            </h3>
+
+        </div>
+
+        <div class="timeline">
+
+            <div class="timeline-item active">
+
+                <div class="timeline-dot"></div>
+
+                <div>
+
+                    <strong>
+
+                        Complaint Submitted
+
+                    </strong>
+
+                    <p>
+
+                        <%= new Date(
+                            complaint.createdAt
+                        ).toLocaleString("en-IN") %>
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            <% if (complaint.status !== "SUBMITTED") { %>
+
+            <div class="timeline-item">
+
+                <div class="timeline-dot"></div>
+
+                <div>
+
+                    <strong>
+
+                        Current Status
+
+                    </strong>
+
+                    <p>
+
+                        <%= complaint.status.replaceAll("_"," ") %>
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            <% } %>
+
+        </div>
+
+    </section>
+
+    <!-- ======================================
+         ADMIN ACTIONS
+    ======================================= -->
+
+    <section class="detail-card action-card">
+
+        <div class="card-header">
+
+            <h3>
+
+                <i class="bi bi-shield-check"></i>
+
+                Administrator Actions
+
+            </h3>
+
+        </div>
+
+        <p class="action-text">
+
+            Review the complaint carefully before approving or rejecting it.
+            Once approved, you'll assign a staff member, set an estimated
+            service cost, and define the completion deadline.
+
+        </p>
+
+        <div class="action-buttons">
+
+            <% if (
+                complaint.status === "SUBMITTED" ||
+                complaint.status === "RESUBMITTED"
+            ) { %>
+
+            <button
+                class="approve-btn"
+                id="approveComplaintBtn"
+            >
+
+                <i class="bi bi-check-circle-fill"></i>
+
+                Approve Complaint
+
+            </button>
+
+            <button
+                class="reject-btn"
+                id="rejectComplaintBtn"
+            >
+
+                <i class="bi bi-x-circle-fill"></i>
+
+                Reject Complaint
+
+            </button>
+
+            <% } else { %>
+
+            <div class="already-reviewed">
+
+                <i class="bi bi-check2-circle"></i>
+
+                Complaint has already been reviewed.
+
+            </div>
+
+            <% } %>
+
+        </div>
+
+    </section>
+
+</div>
+
+</section>
+
+<!-- ==========================================
+     APPROVE MODAL
+========================================== -->
+
+<div
+    class="modal fade"
+    id="approveModal"
+    tabindex="-1"
+    aria-hidden="true"
+>
+
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h5 class="modal-title">
+
+                    Assign Staff & Approve Complaint
+
+                </h5>
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                ></button>
+
+            </div>
+
+            <div class="modal-body">
+
+                <div class="mb-4">
+
+                    <label class="form-label">
+
+                        Assign Staff
+
+                    </label>
+
+                    <select
+                        id="staffSelect"
+                        class="form-select"
+                    >
+
+                        <option value="">
+
+                            Select Staff
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <div class="mb-4">
+
+                    <label class="form-label">
+
+                        Estimated Price
+
+                    </label>
+
+                    <input
+                        type="number"
+                        id="estimatedPrice"
+                        class="form-control"
+                        min="0"
+                        placeholder="Enter estimated price"
+                    >
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Deadline Date
+
+                        </label>
+
+                        <input
+                            type="date"
+                            id="deadlineDate"
+                            class="form-control"
+                        >
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Deadline Time
+
+                        </label>
+
+                        <input
+                            type="time"
+                            id="deadlineTime"
+                            class="form-control"
+                        >
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button
+                    class="btn btn-light"
+                    data-bs-dismiss="modal"
+                >
+
+                    Cancel
+
+                </button>
+
+                <button
+                    id="approveSubmitBtn"
+                    class="btn btn-primary"
+                >
+
+                    <i class="bi bi-check-circle-fill"></i>
+
+                    Approve & Assign
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ==========================================
+     REJECT MODAL
+========================================== -->
+
+<div
+    class="modal fade"
+    id="rejectModal"
+    tabindex="-1"
+    aria-hidden="true"
+>
+
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h5 class="modal-title">
+
+                    Reject Complaint
+
+                </h5>
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                ></button>
+
+            </div>
+
+            <div class="modal-body">
+
+                <label class="form-label">
+
+                    Rejection Reason
+
+                </label>
+
+                <textarea
+                    id="rejectReason"
+                    class="form-control"
+                    rows="5"
+                    placeholder="Explain why this complaint is being rejected..."
+                ></textarea>
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button
+                    class="btn btn-light"
+                    data-bs-dismiss="modal"
+                >
+
+                    Cancel
+
+                </button>
+
+                <button
+                    id="rejectSubmitBtn"
+                    class="btn btn-danger"
+                >
+
+                    <i class="bi bi-x-circle-fill"></i>
+
+                    Reject Complaint
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ==========================================
+     LOGOUT MODAL
+========================================== -->
+
+<div
+    class="logout-modal"
+    id="logoutModal"
+>
+
+    <div class="logout-modal-card">
+
+        <div class="logout-icon">
+
+            <i class="bi bi-box-arrow-right"></i>
+
+        </div>
+
+        <h3>
+
+            Logout Confirmation
+
+        </h3>
+
+        <p>
+
+            Are you sure you want to logout from ResolveStation?
+            You will need to sign in again to continue.
+
+        </p>
+
+        <div class="logout-actions">
+
+            <button
+                class="cancel-btn"
+                id="cancelLogout"
+            >
+
+                Cancel
+
+            </button>
+
+            <button
+                class="confirm-btn"
+                id="confirmLogout"
+            >
+
+                Yes, Logout
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="/js/admin.js"></script>
+
+<script src="/js/complaint-details.js"></script>
+
+</body>
+
+</html>

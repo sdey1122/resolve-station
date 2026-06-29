@@ -1006,6 +1006,184 @@ class AdminController {
 
   /**
    * ==========================================
+   * COMPLAINT MANAGEMENT
+   * ==========================================
+   */
+
+  /**
+   * Get Available Staff
+   */
+
+  async getStaffList(req, res) {
+    try {
+      const result = await adminService.getStaffList();
+
+      return res.status(200).json(result);
+    } catch (error) {
+      console.error(error);
+
+      return res.status(500).json({
+        success: false,
+        message: error.message,
+      });
+    }
+  }
+
+  /**
+   * Approve Complaint
+   */
+
+  async approveComplaint(req, res) {
+    try {
+      const result = await adminService.approveComplaint(
+        req.params.id,
+        req.body,
+        req.user,
+        normalizeIp(req.ip),
+      );
+
+      return res.status(200).json(result);
+    } catch (error) {
+      console.error(error);
+
+      return res.status(500).json({
+        success: false,
+        message: error.message,
+      });
+    }
+  }
+
+  /**
+   * Reject Complaint
+   */
+
+  async rejectComplaint(req, res) {
+    try {
+      const result = await adminService.rejectComplaint(
+        req.params.id,
+        req.body,
+        req.user,
+        normalizeIp(req.ip),
+      );
+
+      return res.status(200).json(result);
+    } catch (error) {
+      console.error(error);
+
+      return res.status(500).json({
+        success: false,
+        message: error.message,
+      });
+    }
+  }
+
+  /**
+   * ==========================================
+   * APPROVE COMPLETED COMPLAINT
+   * ==========================================
+   */
+
+  async approveCompletedComplaint(req, res) {
+    try {
+      const result = await adminService.approveCompletedComplaint(
+        req.user,
+        req.params.id,
+        normalizeIp(req.ip),
+      );
+
+      return res.status(result.success ? 200 : 400).json(result);
+    } catch (error) {
+      console.error(error);
+
+      return res.status(500).json({
+        success: false,
+        message: "Internal Server Error.",
+      });
+    }
+  }
+
+  /**
+   * ==========================================
+   * REJECT COMPLETED COMPLAINT
+   * ==========================================
+   */
+
+  async rejectCompletedComplaint(req, res) {
+    try {
+      const result = await adminService.rejectCompletedComplaint(
+        req.user,
+        req.params.id,
+        req.body,
+        normalizeIp(req.ip),
+      );
+
+      return res.status(result.success ? 200 : 400).json(result);
+    } catch (error) {
+      console.error(error);
+
+      return res.status(500).json({
+        success: false,
+        message: "Internal Server Error.",
+      });
+    }
+  }
+
+  /**
+   * ==========================================
+   * APPROVE CANNOT COMPLETE
+   * ==========================================
+   */
+
+  async approveCannotCompleteComplaint(req, res) {
+    try {
+      const result = await adminService.approveCannotCompleteComplaint(
+        req.user,
+        req.params.id,
+        req.body,
+        normalizeIp(req.ip),
+      );
+
+      return res.status(result.success ? 200 : 400).json(result);
+    } catch (error) {
+      console.error(error);
+
+      return res.status(500).json({
+        success: false,
+
+        message: "Internal Server Error.",
+      });
+    }
+  }
+
+  /**
+   * ==========================================
+   * REJECT CANNOT COMPLETE
+   * ==========================================
+   */
+
+  async rejectCannotCompleteComplaint(req, res) {
+    try {
+      const result = await adminService.rejectCannotCompleteComplaint(
+        req.user,
+        req.params.id,
+        req.body,
+        normalizeIp(req.ip),
+      );
+
+      return res.status(result.success ? 200 : 400).json(result);
+    } catch (error) {
+      console.error(error);
+
+      return res.status(500).json({
+        success: false,
+
+        message: "Internal Server Error.",
+      });
+    }
+  }
+
+  /**
+   * ==========================================
    * GET AUDIT LOGS
    * ==========================================
    */

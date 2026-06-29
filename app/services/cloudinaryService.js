@@ -100,9 +100,21 @@ const restoreDefaultAvatar = async (oldPublicId) => {
   };
 };
 
+// module.exports = {
+//   uploadProfileImage,
+//   deleteProfileImage,
+//   replaceProfileImage,
+//   restoreDefaultAvatar,
+// };
+
 module.exports = {
   uploadProfileImage,
   deleteProfileImage,
   replaceProfileImage,
   restoreDefaultAvatar,
+
+  // Complaint Images
+  uploadComplaintImage: uploadProfileImage,
+  replaceComplaintImage: replaceProfileImage,
+  deleteComplaintImage: deleteProfileImage,
 };

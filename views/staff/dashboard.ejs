@@ -3,317 +3,827 @@
 
 <head>
 
-  <meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-  <title>
-    Staff Dashboard | ResolveStation
-  </title>
+    <title>
 
-  <link
-    rel="stylesheet"
-    href="/css/dashboard.css"
-  >
+        Staff Dashboard | ResolveStation
 
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
-  >
+    </title>
+
+    <!-- Shared Dashboard -->
+
+    <link
+        rel="stylesheet"
+        href="/css/resident.css"
+    >
+
+    <!-- Staff Dashboard -->
+
+    <link
+        rel="stylesheet"
+        href="/css/staff.css"
+    >
+
+    <!-- Bootstrap Icons -->
+
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    >
 
 </head>
 
 <body>
 
-<div class="dashboard-container">
+<div
+    class="sidebar-overlay"
+    id="sidebarOverlay"
+></div>
 
-  <%- include("../partials/staff-sidebar") %>
+<div class="dashboard-wrapper">
 
-  <main class="dashboard-main">
+    <!-- =======================================
+         SIDEBAR
+    ======================================== -->
 
-    <%- include("../partials/dashboard-header") %>
+    <aside
+        class="sidebar"
+        id="sidebar"
+    >
 
-    <!-- ===================================== -->
-    <!-- PAGE HEADER -->
-    <!-- ===================================== -->
+        <div class="sidebar-logo">
 
-    <section class="dashboard-title">
+            <a href="/staff/dashboard">
 
-      <h1>
+                <img
+                    src="/images/logo/resolvestationlogo.svg"
+                    alt="ResolveStation"
+                >
 
-        Welcome Back,
-        <%= user.name %>
-
-      </h1>
-
-      <p>
-
-        Track assigned jobs and monitor your performance.
-
-      </p>
-
-    </section>
-
-    <!-- ===================================== -->
-    <!-- STATISTICS -->
-    <!-- ===================================== -->
-
-    <section class="stats-grid">
-
-      <div class="stat-card blue">
-
-        <div class="stat-icon icon-blue">
-
-          <i class="fas fa-list-check"></i>
+            </a>
 
         </div>
 
-        <h4>
-          Assigned Jobs
-        </h4>
+        <nav class="sidebar-menu">
 
-        <h2>
-          <%= stats?.assigned || 0 %>
-        </h2>
+            <a
+                href="/staff/dashboard"
+                class="sidebar-link active"
+            >
 
-      </div>
+                <i class="bi bi-grid-fill"></i>
 
-      <div class="stat-card orange">
+                <span>
 
-        <div class="stat-icon icon-orange">
+                    Dashboard
 
-          <i class="fas fa-spinner"></i>
+                </span>
+
+            </a>
+
+            <a
+                href="/staff/profile"
+                class="sidebar-link"
+            >
+
+                <i class="bi bi-person-circle"></i>
+
+                <span>
+
+                    My Profile
+
+                </span>
+
+            </a>
+
+        </nav>
+
+        <div class="sidebar-footer">
+
+            <button
+                id="logoutBtn"
+                class="sidebar-link logout-btn"
+                type="button"
+            >
+
+                <i class="bi bi-box-arrow-right"></i>
+
+                <span>
+
+                    Logout
+
+                </span>
+
+            </button>
 
         </div>
 
-        <h4>
-          In Progress
-        </h4>
+    </aside>
 
-        <h2>
-          <%= stats?.inProgress || 0 %>
-        </h2>
+    <!-- =======================================
+         MAIN CONTENT
+    ======================================== -->
 
-      </div>
+    <main
+        class="main-content"
+        id="mainContent"
+    >
 
-      <div class="stat-card green">
+        <header class="dashboard-header">
 
-        <div class="stat-icon icon-green">
+            <div class="header-left">
 
-          <i class="fas fa-circle-check"></i>
+                <button
+                    id="menuToggle"
+                    class="menu-toggle"
+                >
+
+                    <i class="bi bi-list"></i>
+
+                </button>
+
+                <div class="header-title">
+
+                    <h1>
+
+                        Welcome Back,
+
+                        <span>
+
+                            <%= user.name %>
+
+                        </span>
+
+                    </h1>
+
+                    <p>
+
+                        <i class="bi bi-envelope-fill"></i>
+
+                        <%= user.email %>
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="header-right">
+
+                <button class="notification-btn">
+
+                    <i class="bi bi-bell-fill"></i>
+
+                    <span class="notification-dot"></span>
+
+                </button>
+
+                <a
+                    href="/staff/profile"
+                    class="header-profile"
+                >
+
+                    <img
+                        src="<%= user.profileImage?.url || '/images/default-avatar.png' %>"
+                        alt="<%= user.name %>"
+                    >
+
+                </a>
+
+            </div>
+
+        </header>
+
+        <div class="dashboard-content">
+
+                  <!-- ==========================================
+             HERO
+        ========================================== -->
+
+        <section class="staff-hero">
+
+            <div class="hero-content">
+
+                <span class="hero-badge">
+
+                    <i class="bi bi-tools"></i>
+
+                    STAFF WORKSPACE
+
+                </span>
+
+                <h2>
+
+                    Ready for Today's Assignments?
+
+                </h2>
+
+                <p>
+
+                    Complete maintenance jobs before their deadlines, upload proof after successful completion, or report issues that prevent completion. Every update is sent directly to the administrator for review.
+
+                </p>
+
+                <div class="hero-actions">
+
+                    <a
+                        href="/staff/profile"
+                        class="hero-btn hero-primary hb-stf"
+                    >
+
+                        <i class="bi bi-person-circle"></i>
+
+                        My Profile
+
+                    </a>
+
+                </div>
+
+            </div>
+
+            <div class="hero-image">
+
+                <img
+                    src="/images/logo/resolvestationlogo.svg"
+                    alt="Staff Dashboard"
+                >
+
+            </div>
+
+        </section>
+
+        <!-- ==========================================
+             DASHBOARD STATS
+        ========================================== -->
+
+        <section class="dashboard-stats">
+
+            <div class="stat-card">
+
+                <div class="stat-icon total">
+
+                    <i class="bi bi-list-task"></i>
+
+                </div>
+
+                <div class="stat-info">
+
+                    <span>
+
+                        Assigned Jobs
+
+                    </span>
+
+                    <h3>
+
+                        <%= stats.assigned || 0 %>
+
+                    </h3>
+
+                </div>
+
+            </div>
+
+            <div class="stat-card">
+
+                <div class="stat-icon completed">
+
+                    <i class="bi bi-check-circle-fill"></i>
+
+                </div>
+
+                <div class="stat-info">
+
+                    <span>
+
+                        Completed
+
+                    </span>
+
+                    <h3>
+
+                        <%= stats.completed || 0 %>
+
+                    </h3>
+
+                </div>
+
+            </div>
+
+            <div class="stat-card">
+
+                <div class="stat-icon pending">
+
+                    <i class="bi bi-hourglass-split"></i>
+
+                </div>
+
+                <div class="stat-info">
+
+                    <span>
+
+                        Pending Review
+
+                    </span>
+
+                    <h3>
+
+                        <%= stats.pendingReview || 0 %>
+
+                    </h3>
+
+                </div>
+
+            </div>
+
+            <div class="stat-card">
+
+                <div class="stat-icon assigned">
+
+                    <i class="bi bi-alarm-fill"></i>
+
+                </div>
+
+                <div class="stat-info">
+
+                    <span>
+
+                        Overdue
+
+                    </span>
+
+                    <h3>
+
+                        <%= stats.overdue || 0 %>
+
+                    </h3>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- ==========================================
+             SECTION HEADER
+        ========================================== -->
+
+        <div class="section-header">
+
+            <div>
+
+                <span class="section-badge">
+
+                    Active Jobs
+
+                </span>
+
+                <h2>
+
+                    Assigned Maintenance Tasks
+
+                </h2>
+
+                <p>
+
+                    Complete every task before its deadline and keep residents satisfied.
+
+                </p>
+
+            </div>
 
         </div>
 
-        <h4>
-          Completed
-        </h4>
+        <!-- ==========================================
+     TASK GRID
+========================================== -->
 
-        <h2>
-          <%= stats?.completed || 0 %>
-        </h2>
+<% if (assignedJobs.length) { %>
 
-      </div>
+<div class="complaint-grid">
 
-      <div class="stat-card purple">
+    <% assignedJobs.forEach((job)=>{ %>
 
-        <div class="stat-icon icon-purple">
+    <div class="complaint-card">
 
-          <i class="fas fa-chart-line"></i>
+        <!-- ======================================
+             IMAGE
+        ======================================= -->
 
-        </div>
+        <div class="complaint-image">
 
-        <h4>
-          Completion Rate
-        </h4>
+            <img
+                src="<%= job.image?.url || '/images/no-image.png' %>"
+                alt="<%= job.title %>"
+            >
 
-        <h2>
-          <%= stats?.completionRate || 0 %>%
-        </h2>
+            <div class="image-overlay image-assigned"></div>
 
-      </div>
+            <span class="status-badge status-assigned">
 
-    </section>
+                Assigned
 
-    <!-- ===================================== -->
-    <!-- CONTENT GRID -->
-    <!-- ===================================== -->
+            </span>
 
-    <section class="content-grid">
+            <span class="priority-badge priority-normal">
 
-      <!-- RECENT ASSIGNED JOBS -->
+                Active
 
-      <div class="content-card">
-
-        <h3>
-
-          Recent Assigned Jobs
-
-        </h3>
-
-        <div class="table-wrapper">
-
-          <table>
-
-            <thead>
-
-              <tr>
-
-                <th>
-                  Job
-                </th>
-
-                <th>
-                  Priority
-                </th>
-
-                <th>
-                  Status
-                </th>
-
-                <th>
-                  Due Date
-                </th>
-
-              </tr>
-
-            </thead>
-
-            <tbody>
-
-              <% if (
-                assignedJobs &&
-                assignedJobs.length
-              ) { %>
-
-                <% assignedJobs.forEach(
-                  job => {
-                %>
-
-                  <tr>
-
-                    <td>
-
-                      <%= job.title %>
-
-                    </td>
-
-                    <td>
-
-                      <%= job.priority %>
-
-                    </td>
-
-                    <td>
-
-                      <%= job.status %>
-
-                    </td>
-
-                    <td>
-
-                      <%= job.dueDate
-                        ? new Date(
-                            job.dueDate
-                          ).toLocaleDateString()
-                        : "-"
-                      %>
-
-                    </td>
-
-                  </tr>
-
-                <% }) %>
-
-              <% } else { %>
-
-                <tr>
-
-                  <td
-                    colspan="4"
-                    class="empty-state"
-                  >
-
-                    No assigned jobs.
-
-                  </td>
-
-                </tr>
-
-              <% } %>
-
-            </tbody>
-
-          </table>
+            </span>
 
         </div>
 
-      </div>
+        <!-- ======================================
+             BODY
+        ======================================= -->
 
-      <!-- QUICK ACTIONS -->
+        <div class="complaint-body">
 
-      <div class="content-card">
+            <div class="complaint-top">
 
-        <h3>
+                <span class="complaint-number">
 
-          Quick Actions
+                    #<%= job.complaintNumber %>
 
-        </h3>
+                </span>
 
-        <div class="quick-actions">
+                <span class="complaint-category">
 
-          <a
-            href="/staff/assigned-jobs"
-            class="btn btn-primary"
-          >
+                    <%= job.category %>
 
-            <i class="fas fa-list-check"></i>
+                </span>
 
-            Assigned Jobs
+            </div>
 
-          </a>
+            <h3>
 
-          <a
-            href="/staff/performance"
-            class="btn btn-primary"
-          >
+                <%= job.title %>
 
-            <i class="fas fa-chart-line"></i>
+            </h3>
 
-            Performance
+            <p class="complaint-description">
 
-          </a>
+                <%= job.description %>
 
-          <a
-            href="/profile"
-            class="btn btn-primary"
-          >
+            </p>
 
-            <i class="fas fa-user"></i>
+            <!-- Countdown -->
 
-            My Profile
+            <div
+                class="countdown-box"
+                data-deadline="<%= job.deadlineAt %>"
+            >
 
-          </a>
+                <i class="bi bi-clock-history"></i>
 
-        </div>
+                <span class="countdown-text">
 
-      </div>
+                    Loading...
 
-    </section>
+                </span>
 
-    <!-- ===================================== -->
-    <!-- FOOTER -->
-    <!-- ===================================== -->
+            </div>
 
-    <%- include("../partials/dashboard-footer") %>
+            <!-- Resident -->
 
-  </main>
+            <div class="assigned-staff">
+
+                <div class="staff-left">
+
+                    <i class="bi bi-person-fill"></i>
+
+                    <div>
+
+                        <small>
+
+                            Resident
+
+                        </small>
+
+                        <strong>
+
+                            <%= job.resident?.name %>
+
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Price -->
+
+           <div class="price-box">
+
+    <span>Estimated Cost</span>
+
+    <strong data-price="<%= job.estimatedPrice %>">
+
+        ₹<%= job.estimatedPrice %>
+
+    </strong>
 
 </div>
 
-<script src="/js/dashboard.js"></script>
+            <!-- Footer -->
+
+            <div class="complaint-footer">
+
+                <span>
+
+                    Assigned
+
+                    <%= new Date(job.createdAt).toLocaleDateString() %>
+
+                </span>
+
+                <span class="complaint-id">
+
+                    <%= job.status %>
+
+                </span>
+
+            </div>
+
+            <!-- ======================================
+                 ACTIONS
+            ======================================= -->
+
+            <div class="task-actions">
+
+                <button
+                    class="task-complete-btn"
+                    data-id="<%= job._id %>"
+                >
+
+                    <i class="bi bi-check-circle-fill"></i>
+
+                    Job Completed
+
+                </button>
+
+                <button
+                    class="task-failed-btn"
+                    data-id="<%= job._id %>"
+                >
+
+                    <i class="bi bi-x-circle-fill"></i>
+
+                    Unable To Complete
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <% }) %>
+
+</div>
+
+<% } else { %>
+
+<div class="empty-complaints">
+
+    <img
+        src="/images/empty-task.svg"
+        alt="No Tasks"
+    >
+
+    <h3>
+
+        You're All Caught Up!
+
+    </h3>
+
+    <p>
+
+        There are currently no maintenance jobs assigned to you.
+        New assignments will automatically appear here once the administrator assigns them.
+
+    </p>
+
+</div>
+
+<% } %>
+
+        </div>
+
+    </main>
+
+</div>
+
+<!-- ==========================================
+     LOGOUT MODAL
+========================================== -->
+
+<div
+    class="logout-modal"
+    id="logoutModal"
+>
+
+    <div class="logout-modal-card">
+
+        <div class="logout-icon">
+
+            <i class="bi bi-box-arrow-right"></i>
+
+        </div>
+
+        <h2>
+
+            Logout?
+
+        </h2>
+
+        <p>
+
+            Are you sure you want to logout from your
+            <strong>Staff Account</strong>?
+
+        </p>
+
+        <div class="logout-actions">
+
+            <button
+                id="cancelLogout"
+                class="btn-cancel"
+                type="button"
+            >
+
+                Cancel
+
+            </button>
+
+            <button
+                id="confirmLogout"
+                class="btn-confirm"
+                type="button"
+            >
+
+                Logout
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ==========================================
+     COMPLETE JOB MODAL
+========================================== -->
+
+<div
+    class="logout-modal"
+    id="completeJobModal"
+>
+
+    <div class="logout-modal-card staff-modal">
+
+        <div class="logout-icon">
+
+            <i class="bi bi-check-circle-fill"></i>
+
+        </div>
+
+        <h2>
+
+            Complete Maintenance Job
+
+        </h2>
+
+        <p>
+
+            Upload a clear proof image after successfully completing the assigned maintenance work.
+
+        </p>
+
+        <form
+            id="completeJobForm"
+            enctype="multipart/form-data"
+        >
+
+            <input
+                type="hidden"
+                id="completeComplaintId"
+            >
+
+            <input
+                type="file"
+                id="completionImage"
+                accept="image/*"
+                required
+            >
+
+            <button
+                type="submit"
+                class="btn-confirm full-btn btn-stf-cf"
+            >
+                Submit Completion
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+<!-- ==========================================
+     CANNOT COMPLETE MODAL
+========================================== -->
+
+<div
+    class="logout-modal"
+    id="cannotCompleteModal"
+>
+
+    <div class="logout-modal-card staff-modal">
+
+        <div class="logout-icon">
+
+            <i class="bi bi-exclamation-triangle-fill"></i>
+
+        </div>
+
+        <h2>
+
+            Unable To Complete
+
+        </h2>
+
+        <p>
+
+            Explain why the maintenance work could not be completed.
+            The administrator will review your report.
+
+        </p>
+
+        <form id="cannotCompleteForm">
+
+            <input
+                type="hidden"
+                id="cannotComplaintId"
+            >
+
+            <textarea
+                id="staffRemark"
+                rows="6"
+                placeholder="Write the reason..."
+                required
+            ></textarea>
+
+            <button
+                type="submit"
+                class="btn-confirm full-btn sbt-stf-cn"
+            >
+
+                Submit Report
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+<!-- ==========================================
+     STAFF DATA
+========================================== -->
+
+<script>
+
+window.STAFF={
+
+    id:"<%= user._id %>",
+
+    name:"<%= user.name %>",
+
+    email:"<%= user.email %>"
+
+};
+
+</script>
+
+<!-- Toast -->
+
+<script src="/js/toast.js"></script>
+
+<!-- Staff -->
+
+<script src="/js/staff.js"></script>
 
 </body>
 

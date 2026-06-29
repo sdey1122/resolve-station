@@ -580,15 +580,41 @@ if (loginForm) {
        * ==========================================
        */
 
+      // showToast("Login successful. Redirecting...", "success");
+
+      // setTimeout(() => {
+      //   if (data.user.role === "admin") {
+      //     window.location.href = "/admin/dashboard";
+      //   } else if (data.user.role === "staff") {
+      //     window.location.href = "/staff/dashboard";
+      //   } else {
+      //     window.location.href = "/resident/dashboard";
+      //   }
+      // }, 1500);
+
       showToast("Login successful. Redirecting...", "success");
 
       setTimeout(() => {
-        if (data.user.role === "admin") {
-          window.location.href = "/admin/dashboard";
-        } else if (data.user.role === "staff") {
-          window.location.href = "/staff/dashboard";
-        } else {
-          window.location.href = "/resident/dashboard";
+        const role = data.user.role.toUpperCase();
+
+        switch (role) {
+          case "ADMIN":
+            window.location.href = "/admin/dashboard";
+
+            break;
+
+          case "STAFF":
+            window.location.href = "/staff/dashboard";
+
+            break;
+
+          case "RESIDENT":
+            window.location.href = "/resident/dashboard";
+
+            break;
+
+          default:
+            window.location.href = "/auth/login";
         }
       }, 1500);
     } catch (error) {

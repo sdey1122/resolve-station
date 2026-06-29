@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Pending Complaints | ResolveStation</title>
+
+    <!-- Bootstrap -->
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Bootstrap Icons -->
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+    />
+
+    <!-- Dashboard CSS -->
+
+    <link rel="stylesheet" href="/css/admin.css" />
+
+    <link rel="stylesheet" href="/css/pending-complaints.css" />
+
+  </head>
+
+  <body>
+    <!-- Overlay -->
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <div class="dashboard-wrapper">
+      <!-- Sidebar -->
+
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+          <img src="/images/logo/resolvestationlogo.png" alt="ResolveStation" />
+        </div>
+
+        <nav class="sidebar-nav">
+          <a href="/admin/dashboard" class="nav-link">
+            <i class="bi bi-grid"></i>
+            <span class="nav-text">Dashboard</span>
+          </a>
+
+          <!-- ==========================================
+     COMPLAINT MANAGEMENT
+========================================== -->
+
+<div class="nav-title">
+
+    Complaint Management
+
+</div>
+
+<a
+    href="/admin/complaints/pending"
+    class="nav-link active"
+>
+
+    <i class="bi bi-hourglass-split"></i>
+
+    <span class="nav-text">
+
+        Pending Complaints
+
+    </span>
+
+</a>
+
+<div class="nav-divider"></div>
+
+          <div class="nav-title">Staff Management</div>
+
+          <a href="/admin/staff/show" class="nav-link">
+            <i class="bi bi-people"></i>
+            <span class="nav-text">View Staff</span>
+          </a>
+
+          <a href="/admin/staff/create" class="nav-link">
+            <i class="bi bi-person-plus"></i>
+            <span class="nav-text">Manage Staff</span>
+          </a>
+
+          <a href="/admin/completed-reviews" class="nav-link">
+    <i class="bi bi-patch-check-fill"></i>
+
+    <span>
+
+        Completed Reviews
+
+    </span>
+</a>
+
+<a href="/admin/cannot-complete-reviews" class="nav-link">
+    <i class="bi bi-exclamation-octagon-fill"></i>
+
+    <span>
+
+        Unable To Complete
+
+    </span>
+</a>
+
+          <div class="nav-divider"></div>
+
+          <div class="nav-title">Resident Management</div>
+
+          <a href="/admin/resident/show" class="nav-link">
+            <i class="bi bi-house"></i>
+            <span class="nav-text">View Residents</span>
+          </a>
+
+          <div class="nav-divider"></div>
+
+          <div class="nav-title">System</div>
+
+          <a href="/admin/account-trash" class="nav-link">
+            <i class="bi bi-trash"></i>
+            <span class="nav-text">Account Trash</span>
+          </a>
+
+          <a href="/admin/audit-logs" class="nav-link">
+            <i class="bi bi-journal-text"></i>
+            <span class="nav-text">Audit Logs</span>
+          </a>
+        </nav>
+
+        <button class="logout-btn" id="logoutBtn">
+          <i class="bi bi-box-arrow-right"></i>
+
+          <span class="logout-text"> Logout </span>
+        </button>
+      </aside>
+
+      <!-- Main Content -->
+
+      <main class="main-content" id="mainContent">
+        <!-- Header -->
+
+        <header class="dashboard-header">
+          <div class="header-left">
+            <button class="menu-toggle" id="menuToggle">
+              <i class="bi bi-list"></i>
+            </button>
+
+            <div class="welcome-section">
+              <h1>Welcome, <%= user.name %></h1>
+
+              <p>Administrator • <%= user.email %></p>
+            </div>
+          </div>
+
+          <div class="header-right">
+            <button class="notification-btn">
+              <i class="bi bi-bell"></i>
+            </button>
+
+            <a
+  href="/admin/profile"
+  class="profile-box"
+  title="My Profile"
+>
+  <img
+    src="<%= user.profileImage?.url %>"
+    alt="<%= user.name %>"
+  />
+</a>
+        </header>
+
+            <!-- Hero Starts Here -->
+
+            <!-- ==========================================
+     HERO
+========================================== -->
+
+<section class="hero-banner complaint-hero">
+
+    <div class="hero-content">
+
+        <span class="hero-tag">
+
+            Complaint Management
+
+        </span>
+
+        <h2>
+
+            Complaint Review Center
+
+        </h2>
+
+        <p>
+
+            Review newly submitted complaints, verify resident information,
+            approve valid requests or reject them with remarks before assigning
+            them to the maintenance team.
+
+        </p>
+
+    </div>
+
+</section>
+
+<!-- ==========================================
+     SUMMARY
+========================================== -->
+
+<section class="stats-grid">
+
+    <div class="stat-card">
+
+        <i class="bi bi-hourglass-split"></i>
+
+        <h3>
+
+            <%= stats.pending %>
+
+        </h3>
+
+        <span>
+
+            Pending
+
+        </span>
+
+    </div>
+
+    <div class="stat-card">
+
+        <i class="bi bi-arrow-repeat"></i>
+
+        <h3>
+
+            <%= stats.resubmitted %>
+
+        </h3>
+
+        <span>
+
+            Resubmitted
+
+        </span>
+
+    </div>
+
+    <div class="stat-card">
+
+        <i class="bi bi-calendar-check"></i>
+
+        <h3>
+
+            <%= stats.today %>
+
+        </h3>
+
+        <span>
+
+            Today's Requests
+
+        </span>
+
+    </div>
+
+    <div class="stat-card">
+
+        <i class="bi bi-exclamation-circle"></i>
+
+        <h3>
+
+            <%= stats.review %>
+
+        </h3>
+
+        <span>
+
+            Awaiting Decision
+
+        </span>
+
+    </div>
+
+</section>
+
+<!-- ==========================================
+     SEARCH & FILTER
+========================================== -->
+
+<section class="complaint-toolbar">
+
+    <div class="search-box">
+
+        <i class="bi bi-search"></i>
+
+        <input
+            type="text"
+            id="searchComplaint"
+            placeholder="Search by complaint number, resident or title..."
+        >
+
+    </div>
+
+    <select id="categoryFilter">
+
+        <option value="">
+
+            All Categories
+
+        </option>
+
+        <option value="Electrical">
+
+            Electrical
+
+        </option>
+
+        <option value="Plumbing">
+
+            Plumbing
+
+        </option>
+
+        <option value="Cleaning">
+
+            Cleaning
+
+        </option>
+
+        <option value="Water">
+
+            Water
+
+        </option>
+
+        <option value="Internet">
+
+            Internet
+
+        </option>
+
+        <option value="Lift">
+
+            Lift
+
+        </option>
+
+        <option value="Parking">
+
+            Parking
+
+        </option>
+
+        <option value="Security">
+
+            Security
+
+        </option>
+
+        <option value="Garden">
+
+            Garden
+
+        </option>
+
+        <option value="Other">
+
+            Other
+
+        </option>
+
+    </select>
+
+</section>
+
+<!-- ==========================================
+     COMPLAINT GRID
+========================================== -->
+
+<section class="complaint-grid">
+
+    <% if (!complaints || complaints.length === 0) { %>
+
+<!-- ==========================================
+     EMPTY STATE
+========================================== -->
+
+<div class="empty-state">
+
+    <img
+        src="/images/empty-complaints.svg"
+        alt="No Pending Complaints"
+    >
+
+    <h3>
+
+        No Pending Complaints
+
+    </h3>
+
+    <p>
+
+        All complaints have been reviewed.
+        New resident complaints will appear here automatically.
+
+    </p>
+
+</div>
+
+<% } else { %>
+
+<% complaints.forEach((complaint) => { %>
+
+<article class="ticket-card">
+
+    <!-- Header -->
+
+    <div class="ticket-header">
+
+        <span class="ticket-status">
+
+            <%= complaint.status.replaceAll("_"," ") %>
+
+        </span>
+
+        <span class="ticket-number">
+
+            #<%= complaint.complaintNumber %>
+
+        </span>
+
+    </div>
+
+    <!-- Title -->
+
+    <h3 class="ticket-title">
+
+        <%= complaint.title %>
+
+    </h3>
+
+    <!-- Description -->
+
+    <p class="ticket-description">
+
+        <%= complaint.description.length > 80
+            ? complaint.description.substring(0,80) + "..."
+            : complaint.description %>
+
+    </p>
+
+    <!-- Resident -->
+
+    <div class="ticket-row">
+
+        <i class="bi bi-person-circle"></i>
+
+        <span>
+
+            <strong>
+
+                <%= complaint.resident?.name %>
+
+            </strong>
+
+        </span>
+
+    </div>
+
+    <!-- Category -->
+
+    <div class="ticket-row">
+
+        <i class="bi bi-tag"></i>
+
+        <span>
+
+            <%= complaint.category %>
+
+        </span>
+
+    </div>
+
+    <!-- Date -->
+
+    <div class="ticket-row">
+
+        <i class="bi bi-calendar-event"></i>
+
+        <span>
+
+            <%= new Date(complaint.createdAt).toLocaleDateString("en-IN") %>
+
+        </span>
+
+    </div>
+
+    <!-- Image -->
+
+    <div class="ticket-row">
+
+        <i class="bi bi-image"></i>
+
+        <span>
+
+            <%= complaint.image?.url
+                ? "Image Attached"
+                : "No Image" %>
+
+        </span>
+
+    </div>
+
+    <!-- Footer -->
+
+    <div class="ticket-footer">
+
+        <a
+            href="/admin/complaints/<%= complaint._id %>"
+            class="review-btn"
+        >
+
+            <i class="bi bi-eye-fill"></i>
+
+            Review Complaint
+
+        </a>
+
+    </div>
+
+</article>
+
+<% }) %>
+
+<% } %>
+
+</section>
+
+<!-- ==========================================
+     PAGINATION
+========================================== -->
+
+<% if (pagination && pagination.totalPages > 1) { %>
+
+<section class="pagination-wrapper">
+
+    <div class="pagination">
+
+        <% if (pagination.hasPrevPage) { %>
+
+        <a
+            href="?page=<%= pagination.currentPage - 1 %>"
+            class="page-btn"
+        >
+
+            <i class="bi bi-chevron-left"></i>
+
+        </a>
+
+        <% } %>
+
+        <% for (
+            let page = 1;
+            page <= pagination.totalPages;
+            page++
+        ) { %>
+
+        <a
+            href="?page=<%= page %>"
+            class="page-btn <%= page === pagination.currentPage ? 'active' : '' %>"
+        >
+
+            <%= page %>
+
+        </a>
+
+        <% } %>
+
+        <% if (pagination.hasNextPage) { %>
+
+        <a
+            href="?page=<%= pagination.currentPage + 1 %>"
+            class="page-btn"
+        >
+
+            <i class="bi bi-chevron-right"></i>
+
+        </a>
+
+        <% } %>
+
+    </div>
+
+</section>
+
+<% } %>
+
+</main>
+
+</div>
+
+<!-- ==========================================
+     LOGOUT MODAL
+========================================== -->
+
+<div
+    class="logout-modal"
+    id="logoutModal"
+>
+
+    <div class="logout-modal-card">
+
+        <div class="logout-icon">
+
+            <i class="bi bi-box-arrow-right"></i>
+
+        </div>
+
+        <h3>
+
+            Logout Confirmation
+
+        </h3>
+
+        <p>
+
+            Are you sure you want to logout from ResolveStation?
+            You will need to sign in again to access your dashboard.
+
+        </p>
+
+        <div class="logout-actions">
+
+            <button
+                class="cancel-btn"
+                id="cancelLogout"
+            >
+
+                Cancel
+
+            </button>
+
+            <button
+                class="confirm-btn"
+                id="confirmLogout"
+            >
+
+                Yes, Logout
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="/js/admin.js"></script>
+
+<script src="/js/pending-complaints.js"></script>
+
+</body>
+
+</html>

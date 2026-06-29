@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Resident Dashboard | ResolveStation</title>
+
+    <!-- Resident CSS -->
+
+    <link rel="stylesheet" href="/css/resident.css" />
+
+    <!-- Bootstrap Icons -->
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+  </head>
+
+  <body>
+    <!-- ==========================================
+         SIDEBAR OVERLAY (Copied from Admin)
+    ========================================== -->
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- ==========================================
+         DASHBOARD WRAPPER
+    ========================================== -->
+
+    <div class="dashboard-wrapper">
+      <!-- ==========================================
+             SIDEBAR
+        ========================================== -->
+
+      <aside class="sidebar" id="sidebar">
+        <!-- ======================================
+                 LOGO
+            ======================================= -->
+
+        <div class="sidebar-logo">
+          <a href="/resident/dashboard">
+            <img
+              src="/images/logo/resolvestationlogo.svg"
+              alt="ResolveStation"
+            />
+          </a>
+        </div>
+
+        <!-- ======================================
+                 MENU
+            ======================================= -->
+
+        <nav class="sidebar-menu">
+          <a href="/resident/dashboard" class="sidebar-link active">
+            <i class="bi bi-grid-fill"></i>
+
+            <span> Dashboard </span>
+          </a>
+
+          <a href="/resident/create-complaint" class="sidebar-link">
+            <i class="bi bi-plus-circle-fill"></i>
+
+            <span> Create Complaint </span>
+          </a>
+
+          <a href="/resident/manage-complaints" class="sidebar-link">
+            <i class="bi bi-card-checklist"></i>
+
+            <span> Manage Complaints </span>
+          </a>
+
+          <a href="/resident/complaint-trash" class="sidebar-link">
+            <i class="bi bi-trash3-fill"></i>
+
+            <span> Complaint Trash </span>
+          </a>
+
+          <a href="/resident/profile" class="sidebar-link">
+            <i class="bi bi-person-circle"></i>
+
+            <span> My Profile </span>
+          </a>
+        </nav>
+
+        <!-- ======================================
+                 SIDEBAR FOOTER
+            ======================================= -->
+
+        <div class="sidebar-footer">
+          <button class="sidebar-link logout-btn" id="logoutBtn" type="button">
+            <i class="bi bi-box-arrow-right"></i>
+
+            <span> Logout </span>
+          </button>
+        </div>
+      </aside>
+
+      <!-- ==========================================
+             MAIN CONTENT
+        ========================================== -->
+
+      <main class="main-content" id="mainContent">
+        <!-- ==========================================
+                 HEADER
+            ========================================== -->
+
+        <header class="dashboard-header">
+          <!-- Left -->
+
+          <div class="header-left">
+            <button
+              class="menu-toggle"
+              id="menuToggle"
+              type="button"
+              aria-label="Toggle Sidebar"
+            >
+              <i class="bi bi-list"></i>
+            </button>
+
+            <div class="header-title">
+              <h1>
+                Welcome Back,
+
+                <span> <%= user.name %> </span>
+              </h1>
+
+              <p>
+                <i class="bi bi-envelope-fill"></i>
+
+                <%= user.email %>
+              </p>
+            </div>
+          </div>
+
+          <!-- Right -->
+
+          <div class="header-right">
+            <!-- Notification -->
+
+            <button
+              type="button"
+              class="notification-btn"
+              aria-label="Notifications"
+            >
+              <i class="bi bi-bell-fill"></i>
+
+              <span class="notification-dot"></span>
+            </button>
+
+            <!-- Profile -->
+
+            <a href="/resident/profile" class="header-profile">
+              <img
+                src="<%= user.profileImage?.url || '/images/default-avatar.png' %>"
+                alt="<%= user.name %>"
+              />
+            </a>
+          </div>
+        </header>
+
+        <!-- ==========================================
+                 DASHBOARD CONTENT
+            ========================================== -->
+
+        <section class="dashboard-content"></section>
+
+        <!-- ==========================================
+     PAGE HEADER
+========================================== -->
+
+<div class="page-header">
+
+    <div class="page-header-left">
+
+        <span class="page-badge">
+
+            <i class="bi bi-plus-circle-fill"></i>
+
+            Resident Panel
+
+        </span>
+
+        <h2>
+
+            Create Complaint
+
+        </h2>
+
+        <p>
+
+            Submit a new complaint for admin review. After approval,
+            it will be assigned to a staff member.
+
+        </p>
+
+    </div>
+
+    <div class="page-header-right">
+
+        <a
+            href="/resident/dashboard"
+            class="back-btn"
+        >
+
+            <i class="bi bi-arrow-left"></i>
+
+            Back to Dashboard
+
+        </a>
+
+    </div>
+
+</div>
+
+<!-- ==========================================
+     FORM CARD
+========================================== -->
+
+<section class="form-card">
+
+    <div class="form-card-header">
+
+        <div>
+
+            <h3>
+
+                Complaint Information
+
+            </h3>
+
+            <p>
+
+                Please provide accurate information.
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <form
+
+        id="createComplaintForm"
+
+        enctype="multipart/form-data"
+
+    >
+
+        <!-- Row 1 -->
+
+        <div class="form-grid">
+
+                    <!-- ==========================================
+             COMPLAINT TITLE
+        ========================================== -->
+
+        <div class="form-group full-width">
+
+            <label for="title">
+
+                Complaint Title
+                <span>*</span>
+
+            </label>
+
+            <input
+                type="text"
+                id="title"
+                name="title"
+                class="form-input"
+                placeholder="Enter complaint title"
+                maxlength="100"
+                required
+            >
+
+            <small
+                class="form-error"
+                id="titleError"
+            ></small>
+
+        </div>
+
+        <!-- ==========================================
+             CATEGORY
+        ========================================== -->
+
+        <div class="form-group">
+
+            <label for="category">
+
+                Category
+                <span>*</span>
+
+            </label>
+
+            <select
+                id="category"
+                name="category"
+                class="form-input"
+                required
+            >
+
+                <option value="">
+
+                    Select Category
+
+                </option>
+
+
+<option value="Electrical">Electrical</option>
+
+<option value="Plumbing">Plumbing</option>
+
+<option value="Cleaning">Cleaning</option>
+
+<option value="Water">Water</option>
+
+<option value="Internet">Internet</option>
+
+<option value="Lift">Lift</option>
+
+<option value="Parking">Parking</option>
+
+<option value="Security">Security</option>
+
+<option value="Garden">Garden</option>
+
+<option value="Other">Other</option>
+
+            </select>
+
+            <small
+                class="form-error"
+                id="categoryError"
+            ></small>
+
+        </div>
+
+        <!-- ==========================================
+             PRIORITY
+        ========================================== -->
+
+
+                <!-- ==========================================
+             INCIDENT DATE
+        ========================================== -->
+
+        <div class="form-group">
+
+            <label for="incidentDate">
+
+                Incident Date
+
+                <span>*</span>
+
+            </label>
+
+            <input
+                type="date"
+                id="incidentDate"
+                name="incidentDate"
+                class="form-input"
+                required
+            >
+
+            <small
+                class="form-error"
+                id="incidentDateError"
+            ></small>
+
+        </div>
+
+        <!-- ==========================================
+             INCIDENT TIME
+        ========================================== -->
+
+        <div class="form-group">
+
+            <label for="incidentTime">
+
+                Incident Time
+
+                <span>*</span>
+
+            </label>
+
+            <input
+                type="time"
+                id="incidentTime"
+                name="incidentTime"
+                class="form-input"
+                required
+            >
+
+            <small
+                class="form-error"
+                id="incidentTimeError"
+            ></small>
+
+        </div>
+
+                <!-- ==========================================
+             DESCRIPTION
+        ========================================== -->
+
+        <div class="form-group full-width">
+
+            <label for="description">
+
+                Complaint Description
+
+                <span>*</span>
+
+            </label>
+
+            <textarea
+                id="description"
+                name="description"
+                class="form-textarea"
+                rows="7"
+                maxlength="1000"
+                placeholder="Describe your complaint in detail..."
+                required
+            ></textarea>
+
+            <div class="textarea-footer">
+
+                <small
+                    class="form-error"
+                    id="descriptionError"
+                ></small>
+
+                <small
+                    class="character-count"
+                >
+
+                    <span id="descriptionCount">
+
+                        0
+
+                    </span>
+
+                    /1000 Characters
+
+                </small>
+
+            </div>
+
+        </div>
+
+        <!-- ==========================================
+             COMPLAINT IMAGE
+        ========================================== -->
+
+        <div class="form-group full-width">
+
+            <label>
+
+                Upload Complaint Image
+
+                <span>*</span>
+
+            </label>
+
+            <div
+                class="upload-area"
+                id="uploadArea"
+            >
+
+                <input
+                    type="file"
+                    id="image"
+                    name="image"
+                    accept="image/*"
+                    hidden
+                >
+
+                <div
+                    class="upload-content"
+                    id="uploadContent"
+                >
+
+                    <i class="bi bi-cloud-arrow-up-fill"></i>
+
+                    <h4>
+
+                        Upload Complaint Image
+
+                    </h4>
+
+                    <p>
+
+                        Drag & Drop your image here
+
+                    </p>
+
+                    <span>
+
+                        OR
+
+                    </span>
+
+                    <button
+                        type="button"
+                        class="upload-btn"
+                        id="browseImage"
+                    >
+
+                        Browse Image
+
+                    </button>
+
+                    <small>
+
+                        JPG, JPEG, PNG (Maximum 5 MB)
+
+                    </small>
+
+                </div>
+
+                <!-- ==================================
+                     IMAGE PREVIEW
+                =================================== -->
+
+                <div
+                    class="image-preview"
+                    id="imagePreview"
+                >
+
+                    <img
+                        id="previewImage"
+                        src=""
+                        alt="Preview"
+                    >
+
+                    <button
+                        type="button"
+                        class="remove-image"
+                        id="removeImage"
+                    >
+
+                        <i class="bi bi-x-lg"></i>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+            <small
+                class="form-error"
+                id="imageError"
+            ></small>
+
+        </div>
+
+        <!-- ==========================================
+             FORM ACTIONS
+        ========================================== -->
+
+        <div class="form-actions">
+
+            <a
+                href="/resident/dashboard"
+                class="cancel-btn"
+            >
+
+                <i class="bi bi-arrow-left"></i>
+
+                Cancel
+
+            </a>
+
+            <button
+                type="submit"
+                class="submit-btn"
+            >
+
+                <i class="bi bi-send-fill"></i>
+
+                Submit Complaint
+
+            </button>
+
+        </div>
+
+    </form>
+
+</section>
+
+        </main>
+
+    </div>
+
+    <!-- ==========================================
+         LOGOUT MODAL
+    ========================================== -->
+
+    <div
+        class="logout-modal"
+        id="logoutModal"
+    >
+
+        <div class="logout-modal-card">
+
+            <div class="logout-icon">
+
+                <i class="bi bi-box-arrow-right"></i>
+
+            </div>
+
+            <h2>
+
+                Logout?
+
+            </h2>
+
+            <p>
+
+                Are you sure you want to logout from your
+                <strong>Resident Account</strong>?
+
+            </p>
+
+            <div class="logout-actions">
+
+                <button
+                    type="button"
+                    class="btn-cancel"
+                    id="cancelLogout"
+                >
+
+                    Cancel
+
+                </button>
+
+                <button
+                    type="button"
+                    class="btn-confirm"
+                    id="confirmLogout"
+                >
+
+                    Logout
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="/js/toast.js"></script>
+    
+    <script src="/js/resident.js"></script>
+
+    <script src="/js/create-complaint.js"></script>
+
+</body>
+
+</html>
